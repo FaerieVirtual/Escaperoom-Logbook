@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\honey_jar.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
@@ -67,23 +70,51 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Log.cs" />
-    <Compile Include="Logbook.cs">
+    <Compile Include="Forms\CreateLogdialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Logbook.Designer.cs">
-      <DependentUpon>Logbook.cs</DependentUpon>
+    <Compile Include="Forms\CreateLogdialog.Designer.cs">
+      <DependentUpon>CreateLogdialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PasswordDialog.cs">
+    <Compile Include="Forms\LogInDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PasswordDialog.Designer.cs">
+    <Compile Include="Forms\LogInDialog.Designer.cs">
+      <DependentUpon>LogInDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PasswordDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PasswordDialog.Designer.cs">
       <DependentUpon>PasswordDialog.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Logbook.resx">
+    <Compile Include="Scripts\Account.cs" />
+    <Compile Include="Scripts\Log.cs" />
+    <Compile Include="Forms\Logbook.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Logbook.Designer.cs">
       <DependentUpon>Logbook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Scripts\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Forms\PasswordDialog - tmp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PasswordDialog - tmp.Designer.cs">
+      <DependentUpon>PasswordDialog - tmp.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\CreateLogdialog.resx">
+      <DependentUpon>CreateLogdialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Logbook.resx">
+      <DependentUpon>Logbook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LogInDialog.resx">
+      <DependentUpon>LogInDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PasswordDialog.resx">
+      <DependentUpon>PasswordDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -95,8 +126,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="PasswordDialog.resx">
-      <DependentUpon>PasswordDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PasswordDialog - tmp.resx">
+      <DependentUpon>PasswordDialog - tmp.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -114,7 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\" />
-    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\honey_jar.ico" />
+    <None Include="Resources\honey_jar.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

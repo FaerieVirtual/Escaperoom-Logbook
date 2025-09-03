@@ -33,12 +33,15 @@
             this.BackButton = new System.Windows.Forms.Button();
             this.HiddenButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.HintBox = new System.Windows.Forms.Label();
+            this.HintContentBox = new System.Windows.Forms.Label();
+            this.WarningBox = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // passwordBox
             // 
             this.passwordBox.BackColor = System.Drawing.SystemColors.Window;
-            this.passwordBox.Location = new System.Drawing.Point(137, 157);
+            this.passwordBox.Location = new System.Drawing.Point(138, 158);
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.PasswordChar = '*';
             this.passwordBox.ReadOnly = true;
@@ -77,7 +80,7 @@
             // 
             this.HiddenButton.BackgroundImage = global::Logbook.Properties.Resources.hidden;
             this.HiddenButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.HiddenButton.Location = new System.Drawing.Point(498, 154);
+            this.HiddenButton.Location = new System.Drawing.Point(499, 155);
             this.HiddenButton.Name = "HiddenButton";
             this.HiddenButton.Size = new System.Drawing.Size(39, 29);
             this.HiddenButton.TabIndex = 4;
@@ -87,11 +90,44 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(134, 31);
+            this.label1.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.label1.Location = new System.Drawing.Point(45, 34);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(204, 16);
+            this.label1.Size = new System.Drawing.Size(610, 46);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Tento protokol je opatřen heslem";
+            this.label1.Text = "Tento zápis je chráněný a označený jako soukromý. \r\n\r\n";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // HintBox
+            // 
+            this.HintBox.AutoSize = true;
+            this.HintBox.Font = new System.Drawing.Font("Courier New", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.HintBox.Location = new System.Drawing.Point(66, 80);
+            this.HintBox.Name = "HintBox";
+            this.HintBox.Size = new System.Drawing.Size(108, 20);
+            this.HintBox.TabIndex = 6;
+            this.HintBox.Text = "Nápověda:";
+            this.HintBox.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // HintContentBox
+            // 
+            this.HintContentBox.AutoSize = true;
+            this.HintContentBox.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.HintContentBox.Location = new System.Drawing.Point(180, 80);
+            this.HintContentBox.Name = "HintContentBox";
+            this.HintContentBox.Size = new System.Drawing.Size(109, 20);
+            this.HintContentBox.TabIndex = 7;
+            this.HintContentBox.Text = "[nápověda]";
+            // 
+            // WarningBox
+            // 
+            this.WarningBox.AutoSize = true;
+            this.WarningBox.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.WarningBox.Location = new System.Drawing.Point(164, 193);
+            this.WarningBox.Name = "WarningBox";
+            this.WarningBox.Size = new System.Drawing.Size(0, 20);
+            this.WarningBox.TabIndex = 8;
             // 
             // PasswordDialog
             // 
@@ -99,6 +135,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(685, 282);
+            this.Controls.Add(this.WarningBox);
+            this.Controls.Add(this.HintContentBox);
+            this.Controls.Add(this.HintBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.HiddenButton);
             this.Controls.Add(this.BackButton);
@@ -119,5 +158,8 @@
         private System.Windows.Forms.Button BackButton;
         private System.Windows.Forms.Button HiddenButton;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label HintBox;
+        private System.Windows.Forms.Label HintContentBox;
+        private System.Windows.Forms.Label WarningBox;
     }
 }

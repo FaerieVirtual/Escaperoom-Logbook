@@ -13,11 +13,10 @@ namespace Logbook.Resources
     public partial class PasswordDialog : Form
     {
         public Log log;
-        public string Inquiry;
         public PasswordDialog()
         {
             InitializeComponent();
-            passwordInquiryBox.Text = Inquiry;
+            HintContentBox.Text = log.hint;
         }
 
         private void HiddenButton_Click(object sender, EventArgs e)
@@ -40,8 +39,8 @@ namespace Logbook.Resources
             }
             else 
             { 
-                passwordBox.ForeColor = Color.Red;
-                passwordBox.Text = "Nesprávné heslo!";
+                WarningBox.ForeColor = Color.Red;
+                WarningBox.Text = "Nesprávné heslo!";
             }
         }
 
