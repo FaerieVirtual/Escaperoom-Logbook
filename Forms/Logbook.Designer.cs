@@ -38,9 +38,9 @@ namespace Logbook
             this.ContentPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.Home_Beehive = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.LogTitle = new System.Windows.Forms.TextBox();
+            this.AuthorBox = new System.Windows.Forms.TextBox();
+            this.DateTimeBox = new System.Windows.Forms.TextBox();
             this.Home_button = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.Add_button = new System.Windows.Forms.ToolStripSplitButton();
@@ -72,8 +72,8 @@ namespace Logbook
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.LogPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.LockButton = new System.Windows.Forms.Button();
+            this.LogButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Home_Beehive)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.ToolStrip.SuspendLayout();
@@ -119,51 +119,51 @@ namespace Logbook
             this.pictureBox1.Tag = "LogDisplay";
             this.pictureBox1.Visible = false;
             // 
-            // textBox1
+            // LogTitle
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.textBox1.Enabled = false;
-            this.textBox1.Font = new System.Drawing.Font("Courier New", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox1.Location = new System.Drawing.Point(269, 69);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(6);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(520, 45);
-            this.textBox1.TabIndex = 5;
-            this.textBox1.Tag = "LogDisplay";
-            this.textBox1.Visible = false;
+            this.LogTitle.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.LogTitle.Enabled = false;
+            this.LogTitle.Font = new System.Drawing.Font("Courier New", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.LogTitle.Location = new System.Drawing.Point(269, 69);
+            this.LogTitle.Margin = new System.Windows.Forms.Padding(6);
+            this.LogTitle.Name = "LogTitle";
+            this.LogTitle.ReadOnly = true;
+            this.LogTitle.Size = new System.Drawing.Size(520, 45);
+            this.LogTitle.TabIndex = 5;
+            this.LogTitle.Tag = "LogDisplay";
+            this.LogTitle.Visible = false;
             // 
-            // textBox2
+            // AuthorBox
             // 
-            this.textBox2.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.textBox2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.textBox2.Enabled = false;
-            this.textBox2.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox2.Location = new System.Drawing.Point(269, 135);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(6);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(374, 27);
-            this.textBox2.TabIndex = 6;
-            this.textBox2.TabStop = false;
-            this.textBox2.Tag = "LogDisplay";
-            this.textBox2.Text = "Autor:";
-            this.textBox2.Visible = false;
+            this.AuthorBox.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.AuthorBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.AuthorBox.Enabled = false;
+            this.AuthorBox.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.AuthorBox.Location = new System.Drawing.Point(269, 135);
+            this.AuthorBox.Margin = new System.Windows.Forms.Padding(6);
+            this.AuthorBox.Name = "AuthorBox";
+            this.AuthorBox.ReadOnly = true;
+            this.AuthorBox.Size = new System.Drawing.Size(374, 27);
+            this.AuthorBox.TabIndex = 6;
+            this.AuthorBox.TabStop = false;
+            this.AuthorBox.Tag = "LogDisplay";
+            this.AuthorBox.Text = "Autor:";
+            this.AuthorBox.Visible = false;
             // 
-            // textBox3
+            // DateTimeBox
             // 
-            this.textBox3.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.textBox3.Enabled = false;
-            this.textBox3.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.textBox3.Location = new System.Drawing.Point(269, 174);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(6);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(374, 27);
-            this.textBox3.TabIndex = 7;
-            this.textBox3.Tag = "LogDisplay";
-            this.textBox3.Text = "Datum:";
-            this.textBox3.Visible = false;
+            this.DateTimeBox.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.DateTimeBox.Enabled = false;
+            this.DateTimeBox.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.DateTimeBox.Location = new System.Drawing.Point(269, 174);
+            this.DateTimeBox.Margin = new System.Windows.Forms.Padding(6);
+            this.DateTimeBox.Name = "DateTimeBox";
+            this.DateTimeBox.ReadOnly = true;
+            this.DateTimeBox.Size = new System.Drawing.Size(374, 27);
+            this.DateTimeBox.TabIndex = 7;
+            this.DateTimeBox.Tag = "LogDisplay";
+            this.DateTimeBox.Text = "Datum:";
+            this.DateTimeBox.Visible = false;
             // 
             // Home_button
             // 
@@ -450,8 +450,8 @@ namespace Logbook
             this.LogPanel.ColumnCount = 2;
             this.LogPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.LogPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.LogPanel.Controls.Add(this.button2, 0, 0);
-            this.LogPanel.Controls.Add(this.button1, 1, 0);
+            this.LogPanel.Controls.Add(this.LockButton, 0, 0);
+            this.LogPanel.Controls.Add(this.LogButton, 1, 0);
             this.LogPanel.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.FixedSize;
             this.LogPanel.Location = new System.Drawing.Point(1020, 70);
             this.LogPanel.Name = "LogPanel";
@@ -461,26 +461,26 @@ namespace Logbook
             this.LogPanel.Size = new System.Drawing.Size(400, 800);
             this.LogPanel.TabIndex = 12;
             // 
-            // button1
+            // LockButton
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(83, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(314, 74);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.LockButton.BackgroundImage = global::Logbook.Properties.Resources.locked;
+            this.LockButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.LockButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LockButton.Location = new System.Drawing.Point(3, 3);
+            this.LockButton.Name = "LockButton";
+            this.LockButton.Size = new System.Drawing.Size(74, 74);
+            this.LockButton.TabIndex = 2;
+            this.LockButton.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // LogButton
             // 
-            this.button2.BackgroundImage = global::Logbook.Properties.Resources.locked;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(3, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(74, 74);
-            this.button2.TabIndex = 2;
-            this.button2.UseVisualStyleBackColor = true;
+            this.LogButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LogButton.Location = new System.Drawing.Point(83, 3);
+            this.LogButton.Name = "LogButton";
+            this.LogButton.Size = new System.Drawing.Size(314, 74);
+            this.LogButton.TabIndex = 1;
+            this.LogButton.Text = "button1";
+            this.LogButton.UseVisualStyleBackColor = true;
             // 
             // Logbook
             // 
@@ -494,9 +494,9 @@ namespace Logbook
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Home_Beehive);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.DateTimeBox);
+            this.Controls.Add(this.AuthorBox);
+            this.Controls.Add(this.LogTitle);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.ContentPanel);
             this.Controls.Add(this.ToolStrip);
@@ -518,11 +518,11 @@ namespace Logbook
         }
 
         #endregion
-        private FlowLayoutPanel ContentPanel;
+        public FlowLayoutPanel ContentPanel;
         private PictureBox pictureBox1;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
+        public TextBox LogTitle;
+        public TextBox AuthorBox;
+        public TextBox DateTimeBox;
         private ToolStripButton Home_button;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSplitButton Add_button;
@@ -555,8 +555,8 @@ namespace Logbook
         private ToolStripMenuItem JakubAccButton;
         private ToolStripMenuItem AddAccButton;
         public TableLayoutPanel LogPanel;
-        private Button button2;
-        private Button button1;
+        private Button LockButton;
+        private Button LogButton;
     }
 }
 

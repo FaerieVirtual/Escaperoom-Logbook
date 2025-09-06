@@ -19,15 +19,8 @@ namespace Logbook.Forms
                 hint = HintBox.Text,
                 date = DateBox.Text,
                 time = TimeBox.Text,
+                author = AuthorBox.Text
             };
-
-            switch (AuthorBox.Text) 
-            {
-                case "Kateřina Havránková": log.author = Author.Katerina; break;
-                case "Soňa Zahradníková": log.author = Author.Sona; break;
-                case "David Vykukal": log.author = Author.David; break;
-                case "Jakub Beránek": log.author = Author.Jakub; break;
-            }
 
             if (PasswordBox.Text == "") 
             {
@@ -40,10 +33,13 @@ namespace Logbook.Forms
                 log.locked = true;
             }
 
-            Button button = log.CreateLogButton(log.title);
-            if (log.locked == false) { }
-            LogPanel.Controls.Add(button);
-            button.Click += log.TryOpenLog;
+            Button lockbutton = log.CreateLockButton(log.title, log.locked);
+            LogPanel.Controls.Add(lockbutton);
+            lockbutton.Click += log.OpenLog;
+
+            Button logbutton = log.CreateLogButton(log.title);
+            LogPanel.Controls.Add(logbutton);
+            logbutton.Click += log.OpenLog;
         }
 
     }

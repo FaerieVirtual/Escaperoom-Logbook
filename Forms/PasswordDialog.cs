@@ -16,5 +16,19 @@ namespace Logbook.Forms
         {
             InitializeComponent();
         }
+
+        private void OKButton_Click(object sender, EventArgs e)
+        {
+            if (PasswordBox.Text == log.password) 
+            {
+                log.locked = false;
+                log.OpenLog();
+            }
+        }
+
+        private void BackButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

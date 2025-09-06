@@ -20,6 +20,8 @@
             base.Dispose(disposing);
         }
 
+        public Log log;
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -38,9 +40,9 @@
             this.LogTitleBox = new System.Windows.Forms.Label();
             this.HintBox = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.HiddenButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.PasswordBox = new System.Windows.Forms.TextBox();
+            this.HiddenButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -81,6 +83,7 @@
             this.BackButton.Size = new System.Drawing.Size(70, 50);
             this.BackButton.TabIndex = 8;
             this.BackButton.UseVisualStyleBackColor = true;
+            this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
             // 
             // OKButton
             // 
@@ -94,6 +97,7 @@
             this.OKButton.TabIndex = 7;
             this.OKButton.Text = "OK";
             this.OKButton.UseVisualStyleBackColor = false;
+            this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
             // 
             // label2
             // 
@@ -171,17 +175,6 @@
             this.label4.TabIndex = 13;
             this.label4.Text = "Nápověda:";
             // 
-            // HiddenButton
-            // 
-            this.HiddenButton.BackgroundImage = global::Logbook.Properties.Resources.hidden;
-            this.HiddenButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.HiddenButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HiddenButton.Location = new System.Drawing.Point(367, 3);
-            this.HiddenButton.Name = "HiddenButton";
-            this.HiddenButton.Size = new System.Drawing.Size(35, 28);
-            this.HiddenButton.TabIndex = 11;
-            this.HiddenButton.UseVisualStyleBackColor = true;
-            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
@@ -194,7 +187,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(405, 34);
             this.tableLayoutPanel2.TabIndex = 16;
             // 
@@ -210,6 +203,17 @@
             this.PasswordBox.Size = new System.Drawing.Size(358, 27);
             this.PasswordBox.TabIndex = 11;
             this.PasswordBox.UseSystemPasswordChar = true;
+            // 
+            // HiddenButton
+            // 
+            this.HiddenButton.BackgroundImage = global::Logbook.Properties.Resources.hidden;
+            this.HiddenButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.HiddenButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HiddenButton.Location = new System.Drawing.Point(367, 3);
+            this.HiddenButton.Name = "HiddenButton";
+            this.HiddenButton.Size = new System.Drawing.Size(35, 28);
+            this.HiddenButton.TabIndex = 11;
+            this.HiddenButton.UseVisualStyleBackColor = true;
             // 
             // PasswordDialog
             // 
@@ -242,11 +246,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label HintBox;
+        public System.Windows.Forms.Label HintBox;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label LogTitleBox;
+        public System.Windows.Forms.Label LogTitleBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button HiddenButton;
-        private System.Windows.Forms.TextBox PasswordBox;
+        public System.Windows.Forms.TextBox PasswordBox;
     }
 }
