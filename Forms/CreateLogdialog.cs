@@ -8,21 +8,24 @@ namespace Logbook.Forms
         {
             InitializeComponent();
         }
+        public bool privated;
+        public Log log;
 
-
-        public void CreateLog(FlowLayoutPanel LogPanel)
+        public Log CreateLog()
         {
-            Log log = new Log()
+            FlowLayoutPanel LogPanel = Logbook.logbook.LogPanel;
+            log = new()
             {
                 title = TitleBox.Text,
                 password = PasswordBox.Text,
                 hint = HintBox.Text,
                 date = DateBox.Text,
                 time = TimeBox.Text,
-                author = AuthorBox.Text
+                author = AuthorBox.Text,
+                privated = privated
             };
 
-            if (PasswordBox.Text == "") 
+            if (PasswordBox.Text == "")
             {
                 log.password = "";
                 log.locked = false;
@@ -33,14 +36,42 @@ namespace Logbook.Forms
                 log.locked = true;
             }
 
-            Button lockbutton = log.CreateLockButton(log.title, log.locked);
-            LogPanel.Controls.Add(lockbutton);
-            lockbutton.Click += log.OpenLog;
+            if (!privated)
+            {
+                Button logbutton = log.CreateLogButton();
+                LogPanel.Controls.Add(logbutton);
+            }
 
-            Button logbutton = log.CreateLogButton(log.title);
-            LogPanel.Controls.Add(logbutton);
-            logbutton.Click += log.OpenLog;
+            return log;
         }
 
+        private void BackButton_Click(object sender, System.EventArgs e)
+        {
+            Close();
+        }
+
+        private void OKButton_Click(object sender, System.EventArgs e)
+        {
+            if (TitleBox.Text == "") { WarningLabel.Text = WarningLabel.Text + "Titul nemůže být prázdný!"; return; }
+            if (AuthorBox.Text == "") { WarningLabel.Text = WarningLabel.Text + "\n Autor nemůže být prázdný!"; return; }
+
+            Log log = CreateLog();
+            Logbook.logbook.logs.Add(log);
+            Close();
+        }
+
+        private void PrivateButton_Click(object sender, System.EventArgs e)
+        {
+            if (!privated)
+            {
+                PrivateButton.BackColor = System.Drawing.SystemColors.ControlDark;
+                privated = true;
+            }
+            else
+            {
+                PrivateButton.BackColor = System.Drawing.SystemColors.Control;
+                privated = false;
+            }
+        }
     }
 }

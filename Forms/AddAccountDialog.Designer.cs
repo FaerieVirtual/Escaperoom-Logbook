@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Logbook.Forms
 {
-    public partial class LogInDialog
+    public partial class AddAccountDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -41,10 +41,10 @@ namespace Logbook.Forms
             tableLayoutPanel2 = new TableLayoutPanel();
             passwordBox = new TextBox();
             HiddenButton = new Button();
-            HintBox = new Label();
             label4 = new Label();
             NameBox = new TextBox();
             WarningLabel = new Label();
+            hintBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -70,9 +70,9 @@ namespace Logbook.Forms
             label1.Font = new System.Drawing.Font("Courier New", 22.2F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, 238);
             label1.Location = new System.Drawing.Point(267, 51);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(238, 41);
+            label1.Size = new System.Drawing.Size(260, 41);
             label1.TabIndex = 6;
-            label1.Text = "Přihlášení";
+            label1.Text = "Přidat účet";
             // 
             // BackButton
             // 
@@ -134,11 +134,11 @@ namespace Logbook.Forms
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23.3209F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 76.6791F));
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 1);
-            tableLayoutPanel1.Controls.Add(HintBox, 1, 2);
             tableLayoutPanel1.Controls.Add(label4, 0, 2);
             tableLayoutPanel1.Controls.Add(label3, 0, 1);
             tableLayoutPanel1.Controls.Add(label2, 0, 0);
             tableLayoutPanel1.Controls.Add(NameBox, 1, 0);
+            tableLayoutPanel1.Controls.Add(hintBox, 1, 2);
             tableLayoutPanel1.Location = new System.Drawing.Point(236, 151);
             tableLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -146,6 +146,7 @@ namespace Logbook.Forms
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel1.Size = new System.Drawing.Size(536, 250);
             tableLayoutPanel1.TabIndex = 10;
             // 
@@ -192,16 +193,6 @@ namespace Logbook.Forms
             HiddenButton.UseVisualStyleBackColor = true;
             HiddenButton.Click += HiddenButton_Click;
             // 
-            // HintBox
-            // 
-            HintBox.AutoSize = true;
-            HintBox.Dock = DockStyle.Fill;
-            HintBox.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
-            HintBox.Location = new System.Drawing.Point(129, 101);
-            HintBox.Name = "HintBox";
-            HintBox.Size = new System.Drawing.Size(403, 148);
-            HintBox.TabIndex = 14;
-            // 
             // label4
             // 
             label4.Anchor = AnchorStyles.None;
@@ -233,7 +224,16 @@ namespace Logbook.Forms
             WarningLabel.TabIndex = 11;
             WarningLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // LogInDialog
+            // hintBox
+            // 
+            hintBox.Dock = DockStyle.Fill;
+            hintBox.Location = new System.Drawing.Point(129, 104);
+            hintBox.Multiline = true;
+            hintBox.Name = "hintBox";
+            hintBox.Size = new System.Drawing.Size(403, 142);
+            hintBox.TabIndex = 18;
+            // 
+            // AddAccountDialog
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -245,7 +245,7 @@ namespace Logbook.Forms
             Controls.Add(label1);
             Controls.Add(pictureBox1);
             Margin = new Padding(3, 4, 3, 4);
-            Name = "LogInDialog";
+            Name = "AddAccountDialog";
             Text = "Logbook v.1.15 - Přihlášení";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
@@ -270,8 +270,8 @@ namespace Logbook.Forms
         private System.Windows.Forms.Label label4;
         private TableLayoutPanel tableLayoutPanel2;
         private Button HiddenButton;
-        public Label HintBox;
         public TextBox passwordBox;
         private Label WarningLabel;
+        private TextBox hintBox;
     }
 }

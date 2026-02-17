@@ -1,103 +1,141 @@
 ﻿using Logbook.Forms;
-using Logbook.Properties;
-using System;
+using Microsoft.VisualBasic.Logging;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
 public class Log
 {
-    public string title;
-    public bool locked;
-    public string password;
-    public string hint;
-    public string author;
+    public string title = "";
+    public bool locked = false;
+    public string password = "";
+    public string hint = "";
+    public string author = "";
     public string date, time;
-    public string[] content;
+    public bool privated = false;
 
+    public List<LogItem> Content = new();
 
-    public void OpenLog(object sender, EventArgs e)
+    public void SaveFromUI()
     {
-        Open();
+        var logbook = Logbook.Logbook.logbook;
+
+        if (logbook.selectedLog != this)
+            return;
+
+        Content.Clear();
+
+        foreach (Control c in logbook.ContentPanel.Controls)
+        {
+            LogItem item = new();
+
+            switch (c)
+            {
+                case TextBox tb:
+                    item.Type = LogItemType.Text;
+                    item.Data = tb.Text;
+                    break;
+
+                case PictureBox pb:
+                    item.Type = LogItemType.Image;
+                    item.Data = pb.Name;
+                    break;
+
+                case AudioRecordingStrip ars:
+                    item.Type = LogItemType.Audio;
+                    item.Data = ars.Name;
+                    break;
+            }
+
+            Content.Add(item);
+        }
+    }
+
+    public void WriteToDisk()
+    {
+        bool wasLocked = locked;
+
+        if (!string.IsNullOrEmpty(password))
+            locked = true;
+
+        string json = JsonConvert.SerializeObject(this, Formatting.Indented);
+        string dir = Path.Combine("Content", "Logs");
+
+        Directory.CreateDirectory(dir);
+        File.WriteAllText(Path.Combine(dir, title + ".json"), json);
+
+        locked = wasLocked;
+    }
+
+    public void LoadToUI()
+    {
+        var logbook = Logbook.Logbook.logbook;
+
+        logbook.LogTitle.Text = title;
+        logbook.AuthorBox.Text = "Autor: " + author;
+        logbook.DateTimeBox.Text = date + ", " + time;
+
+        logbook.ContentPanel.Controls.Clear();
+
+        foreach (var item in Content)
+        {
+            switch (item.Type)
+            {
+                case LogItemType.Text:
+                    logbook.AddTextfield(item.Data);
+                    break;
+
+                case LogItemType.Image:
+                    logbook.AddImage(item.Data);
+                    break;
+
+                case LogItemType.Audio:
+                    logbook.AddAudioRecording(item.Data);
+                    break;
+            }
+        }
     }
 
     public void Open()
     {
+        var logbook = Logbook.Logbook.logbook;
+
+        if (logbook.selectedLog != null)
+        {
+            logbook.selectedLog.SaveFromUI();
+            logbook.selectedLog.WriteToDisk();
+        }
+
+        logbook.selectedLog = this;
+
         if (locked)
         {
-            PasswordDialog passwordDialog = new PasswordDialog()
-            {
-                log = this
-            };
-            passwordDialog.LogTitleBox.Text = title;
-            passwordDialog.HintBox.Text = hint;
-            passwordDialog.ShowDialog();
+            PasswordDialog dlg = new() { log = this };
+            dlg.LogTitleBox.Text = title;
+            dlg.ShowDialog();
+            return;
         }
-        else
-        {
-            if (Form.ActiveForm is Logbook.Logbook logbook)
-            {
-                logbook.ShowLog();
-                logbook.LogTitle.Text = title;
-                logbook.AuthorBox.Text = "Autor: " + author;
-                logbook.DateTimeBox.Text = date + ", " + time;
-            }
-            foreach (string i in content)
-            {
-                if (File.Exists(i)) 
-                { 
-                    string type = i.Substring(i.LastIndexOf('.'));
-                    if (type == ".png" || type == ".jpeg") 
-                    { 
-                        
-                    }
-                    if (type == ".mp3" || type == ".aiff") 
-                    { 
-                    
-                    }
-                }
-            }
 
-        }
+        logbook.ShowLog();
+        LoadToUI();
     }
 
-    public Button CreateLogButton(string name)
+    public Button CreateLogButton()
     {
-        Button button = new Button()
+        Button btn = new()
         {
-            Width = 314,
-            Height = 74,
-            Name = name + "LogButton",
-            Text = name,
-            Enabled = true,
-            ForeColor = Color.Black,
-            UseVisualStyleBackColor = true,
-            Cursor = Cursors.Hand,
-            TextAlign = ContentAlignment.MiddleCenter
+            Text = locked ? $"[🔒] {title}" : $"[🔓] {title}",
+            Height = 80,
+            Width = Logbook.Logbook.logbook.LogPanel.ClientSize.Width - 20,
+            Font = new Font("Courier New", 18),
+            Name = title,
+            ContextMenuStrip = Logbook.Logbook.logbook.logItemMenu,
+            Tag = this
         };
-        return button;
-    }
 
-    public Button CreateLockButton(string name, bool locked)
-    {
-        Button button = new Button()
-        {
-            Width = 74,
-            Height = 74,
-            Name = name + "LockButton",
-            Text = "",
-            Enabled = true,
-            ForeColor = Color.Black,
-            UseVisualStyleBackColor = true,
-            Cursor = Cursors.Hand,
-            BackgroundImageLayout = ImageLayout.Zoom,
-            ImageAlign = ContentAlignment.MiddleCenter,
-            Dock = DockStyle.Fill
-
-        };
-        if (locked) { button.BackgroundImage = Resources.locked; }
-        else { button.BackgroundImage = Resources.unlocked; }
-
-        return button;
+        btn.Click += (s, e) => Open();
+        return btn;
     }
 }
