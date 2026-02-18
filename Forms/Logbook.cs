@@ -44,6 +44,9 @@ namespace Logbook
 
         private void OnLoad(object sender, EventArgs e)
         {
+            AutoScaleMode = AutoScaleMode.Dpi;
+            WindowState = FormWindowState.Maximized;
+
             InitializeContentItemMenu();
             InitializeContentPanelMenu();
             InitializeLogItemMenu();
@@ -138,6 +141,9 @@ namespace Logbook
             {
                 selectedLog.Open();
             }
+            MainPanel.RowStyles.Clear();
+            MainPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, ToolStrip.Height));
+            MainPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         }
 
         #endregion
