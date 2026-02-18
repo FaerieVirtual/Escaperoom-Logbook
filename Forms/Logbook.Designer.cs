@@ -397,11 +397,10 @@ namespace Logbook
             // 
             // Logbook
             // 
-            AutoScaleDimensions = new SizeF(16F, 30F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             BackColor = SystemColors.Control;
             BackgroundImageLayout = ImageLayout.Zoom;
-            ClientSize = new Size(1440, 900);
+            MinimumSize = new Size(1280, 800);
             Controls.Add(DateLabel);
             Controls.Add(TimeLabel);
             Controls.Add(Home_Beehive);
