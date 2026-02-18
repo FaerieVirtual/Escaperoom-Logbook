@@ -1,11 +1,11 @@
 ﻿using Logbook.Forms;
 using Logbook.Properties;
 using Logbook.Scripts;
-using Microsoft.VisualBasic.Logging;
 using NAudio.Wave;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -50,6 +50,18 @@ namespace Logbook
             InitializeLogPanelMenu();
             LoadAllLogs();
             LoadAllAccounts();
+
+            foreach (Control control in Controls)
+            {
+                if (control.Tag is string controlTag && controlTag == "HomeDisplay")
+                {
+                    control.Show();
+                }
+                if (control.Tag is string ctrlTag && ctrlTag == "LogDisplay")
+                {
+                    control.Hide();
+                }
+            }
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
@@ -71,22 +83,20 @@ namespace Logbook
             create.ShowDialog();
         }
 
-        public void ShowLog()
+        public void SetLogDisplay()
         {
             foreach (Control control in Controls)
             {
-                if (control != null && ((string)control.Tag == "MessageDisplay" || (string)control.Tag == "HomeDisplay"))
+                if (control.Tag is string controlTag && controlTag == "HomeDisplay")
                 {
-                    control.Enabled = false;
-                    control.Visible = false;
+                    control.Hide();
                 }
-                if (control != null && (string)control.Tag == "LogDisplay")
+                if (control.Tag is string ctrlTag && ctrlTag == "LogDisplay")
                 {
-                    control.Enabled = true;
-                    control.Visible = true;
+                    control.Show();
                 }
-            }
 
+            }
         }
 
         private void LoadAllLogs()
@@ -387,6 +397,7 @@ namespace Logbook
                 Width = ContentPanel.ClientSize.Width - 25,
                 Margin = new Padding(10, 10, 10, 10),
                 Font = new Font("Courier New", 14),
+                ForeColor = Color.Black,
                 ContextMenuStrip = contentItemMenu
             };
 
@@ -432,16 +443,15 @@ namespace Logbook
         {
             foreach (Control control in Controls)
             {
-                if (control != null && ((string)control.Tag == "LogDisplay" || (string)control.Tag == "MessageDisplay"))
+                if (control.Tag is string controlTag && controlTag == "HomeDisplay")
                 {
-                    control.Enabled = false;
-                    control.Visible = false;
+                    control.Show();
                 }
-                if (control != null && (string)control.Tag == "HomeDisplay")
+                if (control.Tag is string ctrlTag && ctrlTag == "LogDisplay")
                 {
-                    control.Enabled = true;
-                    control.Visible = true;
+                    control.Hide();
                 }
+
             }
         }
         private void Add_TextClick(object sender, EventArgs e)
@@ -602,7 +612,7 @@ namespace Logbook
                 selectedLog.title = selectedLog.locked ? $"[🔒] {newName}" : $"[🔓] {newName}";
                 selectedLog.WriteToDisk();
 
-                ((Button)logItemMenu.SourceControl).Text = newName;
+                ((System.Windows.Forms.Button)logItemMenu.SourceControl).Text = newName;
             }
             else
             {

@@ -118,7 +118,7 @@ public class Log
             return;
         }
 
-        logbook.ShowLog();
+        logbook.SetLogDisplay();
         LoadToUI();
     }
 

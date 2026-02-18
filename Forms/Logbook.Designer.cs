@@ -109,33 +109,33 @@ namespace Logbook
             // Add_LogButton
             // 
             Add_LogButton.Name = "Add_LogButton";
-            Add_LogButton.Size = new Size(224, 26);
+            Add_LogButton.Size = new Size(212, 26);
             Add_LogButton.Text = "Protokol";
             Add_LogButton.Click += Add_LogButton_Click;
             // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new Size(221, 6);
+            toolStripSeparator5.Size = new Size(209, 6);
             // 
             // AddTextButton
             // 
             AddTextButton.Name = "AddTextButton";
-            AddTextButton.Size = new Size(224, 26);
+            AddTextButton.Size = new Size(212, 26);
             AddTextButton.Text = "Textové pole";
             AddTextButton.Click += Add_TextClick;
             // 
             // AddImageButton
             // 
             AddImageButton.Name = "AddImageButton";
-            AddImageButton.Size = new Size(224, 26);
+            AddImageButton.Size = new Size(212, 26);
             AddImageButton.Text = "Obrázek";
             AddImageButton.Click += Add_ImageClick;
             // 
             // AddAudioButton
             // 
             AddAudioButton.Name = "AddAudioButton";
-            AddAudioButton.Size = new Size(224, 26);
+            AddAudioButton.Size = new Size(212, 26);
             AddAudioButton.Text = "Nahrávka";
             AddAudioButton.Click += Add_AudioClick;
             // 
@@ -281,7 +281,6 @@ namespace Logbook
             // DateTimeBox
             // 
             DateTimeBox.BackColor = SystemColors.ControlLight;
-            DateTimeBox.Enabled = false;
             DateTimeBox.Font = new Font("Courier New", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 238);
             DateTimeBox.Location = new Point(264, 196);
             DateTimeBox.Margin = new Padding(6);
@@ -291,28 +290,24 @@ namespace Logbook
             DateTimeBox.TabIndex = 7;
             DateTimeBox.Tag = "LogDisplay";
             DateTimeBox.Text = "Datum:";
-            DateTimeBox.Visible = false;
             // 
             // ContentPanel
             // 
             ContentPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             ContentPanel.AutoScroll = true;
             ContentPanel.BorderStyle = BorderStyle.Fixed3D;
-            ContentPanel.Enabled = false;
             ContentPanel.FlowDirection = FlowDirection.TopDown;
-            ContentPanel.Location = new Point(13, 285);
+            ContentPanel.Location = new Point(35, 285);
             ContentPanel.Margin = new Padding(10);
             ContentPanel.Name = "ContentPanel";
-            ContentPanel.Size = new Size(1005, 596);
+            ContentPanel.Size = new Size(938, 580);
             ContentPanel.TabIndex = 3;
             ContentPanel.Tag = "LogDisplay";
-            ContentPanel.Visible = false;
             ContentPanel.WrapContents = false;
             // 
             // AuthorBox
             // 
             AuthorBox.BackColor = SystemColors.ControlLight;
-            AuthorBox.Enabled = false;
             AuthorBox.Font = new Font("Courier New", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 238);
             AuthorBox.Location = new Point(264, 157);
             AuthorBox.Margin = new Padding(6);
@@ -323,12 +318,10 @@ namespace Logbook
             AuthorBox.TabStop = false;
             AuthorBox.Tag = "LogDisplay";
             AuthorBox.Text = "Autor:";
-            AuthorBox.Visible = false;
             // 
             // LogTitle
             // 
             LogTitle.BackColor = SystemColors.ControlLight;
-            LogTitle.Enabled = false;
             LogTitle.Font = new Font("Courier New", 19.8F, FontStyle.Bold, GraphicsUnit.Point, 238);
             LogTitle.Location = new Point(264, 100);
             LogTitle.Margin = new Padding(6);
@@ -337,13 +330,11 @@ namespace Logbook
             LogTitle.Size = new Size(520, 45);
             LogTitle.TabIndex = 5;
             LogTitle.Tag = "LogDisplay";
-            LogTitle.Visible = false;
             // 
             // pictureBox1
             // 
             pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
             pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.Enabled = false;
             pictureBox1.Location = new Point(35, 60);
             pictureBox1.Margin = new Padding(6);
             pictureBox1.Name = "pictureBox1";
@@ -351,7 +342,6 @@ namespace Logbook
             pictureBox1.TabIndex = 4;
             pictureBox1.TabStop = false;
             pictureBox1.Tag = "LogDisplay";
-            pictureBox1.Visible = false;
             // 
             // LogPanel
             // 
@@ -359,13 +349,13 @@ namespace Logbook
             LogPanel.BackColor = SystemColors.Control;
             LogPanel.BorderStyle = BorderStyle.Fixed3D;
             LogPanel.FlowDirection = FlowDirection.TopDown;
-            LogPanel.Location = new Point(1030, 60);
+            LogPanel.Location = new Point(993, 60);
             LogPanel.Margin = new Padding(10);
             LogPanel.MaximumSize = new Size(400, 1000);
             LogPanel.MinimumSize = new Size(400, 100);
             LogPanel.Name = "LogPanel";
             LogPanel.Padding = new Padding(10);
-            LogPanel.Size = new Size(400, 821);
+            LogPanel.Size = new Size(400, 805);
             LogPanel.TabIndex = 0;
             LogPanel.WrapContents = false;
             // 
@@ -435,4 +425,3 @@ namespace Logbook
         public FlowLayoutPanel LogPanel;
     }
 }
-

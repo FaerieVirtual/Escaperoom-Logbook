@@ -25,7 +25,7 @@ namespace Logbook.Forms
             }
 
             log.locked = false;
-            Logbook.logbook.ShowLog();
+            Logbook.logbook.SetLogDisplay();
             log.LoadToUI();
 
             Close();
