@@ -51,17 +51,7 @@ namespace Logbook
             LoadAllLogs();
             LoadAllAccounts();
 
-            foreach (Control control in Controls)
-            {
-                if (control.Tag is string controlTag && controlTag == "HomeDisplay")
-                {
-                    control.Show();
-                }
-                if (control.Tag is string ctrlTag && ctrlTag == "LogDisplay")
-                {
-                    control.Hide();
-                }
-            }
+            SetHomeDisplay();
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
@@ -95,9 +85,25 @@ namespace Logbook
                 {
                     control.Show();
                 }
-
+                ContentPanel.Show();
             }
         }
+        public void SetHomeDisplay()
+        {
+            foreach (Control control in Controls)
+            {
+                if (control.Tag is string controlTag && controlTag == "HomeDisplay")
+                {
+                    control.Show();
+                }
+                if (control.Tag is string ctrlTag && ctrlTag == "LogDisplay")
+                {
+                    control.Hide();
+                }
+                ContentPanel.Hide();
+            }
+        }
+
 
         private void LoadAllLogs()
         {
@@ -123,6 +129,14 @@ namespace Logbook
                     btn.Enabled = false;
                     LogPanel.Controls.Add(btn);
                 }
+            }
+        }
+
+        public void Resize(object sender, EventArgs e)
+        {
+            if (selectedLog != null)
+            {
+                selectedLog.Open();
             }
         }
 
@@ -441,18 +455,7 @@ namespace Logbook
         #region Toolbar
         private void Home_button_Click(object sender, EventArgs e)
         {
-            foreach (Control control in Controls)
-            {
-                if (control.Tag is string controlTag && controlTag == "HomeDisplay")
-                {
-                    control.Show();
-                }
-                if (control.Tag is string ctrlTag && ctrlTag == "LogDisplay")
-                {
-                    control.Hide();
-                }
-
-            }
+            SetHomeDisplay();
         }
         private void Add_TextClick(object sender, EventArgs e)
         {
@@ -474,7 +477,7 @@ namespace Logbook
 
                 using OpenFileDialog ofd = new();
                 ofd.AddExtension = true;
-                ofd.Filter = "MP3 files (*.mp3)|*.mp3|WAV files (*.wav)|*.wav|AIFF files (*.aiff)|*.aiff";
+                ofd.Filter = "All files (*.*)|*.*|MP3 files (*.mp3)|*.mp3|WAV files (*.wav)|*.wav|AIFF files (*.aiff)|*.aiff";
                 ofd.Title = "Choose a file:";
 
                 DialogResult result = ofd.ShowDialog();
@@ -524,7 +527,7 @@ namespace Logbook
                 using OpenFileDialog ofd = new();
 
                 ofd.AddExtension = true;
-                ofd.Filter = "PNG soubory (*.png)|*.png|JPEG soubory (*.jpeg)|*.jpeg|JPG soubory (*.jpg)|*.jpg";
+                ofd.Filter = "All files (*.*)|*.*|PNG soubory (*.png)|*.png|JPEG soubory (*.jpeg)|*.jpeg|JPG soubory (*.jpg)|*.jpg";
                 ofd.Title = "Vyberte soubor:";
 
                 DialogResult success = ofd.ShowDialog();
