@@ -453,15 +453,14 @@ namespace Logbook
 
                 AudioFileReader reader;
 
-                string filePath = ofd.FileName;
-                string fileName = Path.GetFileName(filePath);
+                string fileName = ofd.FileName;
                 string destinationPath = Path.Combine(Paths.Audio, fileName);
-                if (File.Exists(filePath))
+                if (File.Exists(fileName))
                 {
                     reader = new(ofd.FileName);
                     try
                     {
-                        File.Copy(filePath, destinationPath, true);
+                        File.Copy(fileName, destinationPath, true);
                     }
                     catch
                     {
@@ -498,14 +497,13 @@ namespace Logbook
 
                 if (success == DialogResult.Cancel) return;
 
-                string filePath = ofd.FileName;
-                string fileName = Path.GetFileName(filePath);
+                string fileName = ofd.FileName;
                 string destinationPath = Path.Combine(Paths.Images, fileName);
-                if (File.Exists(filePath))
+                if (File.Exists(fileName))
                 {
                     try
                     {
-                        File.Copy(filePath, destinationPath, true);
+                        File.Copy(fileName, destinationPath, true);
                     }
                     catch
                     {

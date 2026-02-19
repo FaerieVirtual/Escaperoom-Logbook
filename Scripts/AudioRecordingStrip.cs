@@ -27,9 +27,9 @@ public class AudioRecordingStrip : UserControl
     private Timer RefreshTimer;
     private System.ComponentModel.IContainer components;
 
-    public AudioRecordingStrip(string filepath)
+    public AudioRecordingStrip(string fileName)
     {
-        path = filepath;
+        path = Path.Combine(Paths.Audio, fileName);
 
         MinimumSize = new Size(616, 124);
 
