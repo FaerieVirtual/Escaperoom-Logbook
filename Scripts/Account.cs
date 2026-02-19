@@ -77,8 +77,7 @@ namespace Logbook.Scripts
         {
             string JSON = JsonConvert.SerializeObject(this);
 
-            string safeName = string.Join("_", name.Split(Path.GetInvalidFileNameChars()));
-            string file = Path.Combine(Paths.Accounts, safeName + ".json");
+            string file = Path.Combine(Paths.Accounts, name + ".json");
 
             File.WriteAllText(file, JSON);
         }

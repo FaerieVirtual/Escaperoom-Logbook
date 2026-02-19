@@ -16,6 +16,8 @@ namespace Logbook
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Paths.EnsureCreated();
+
             Application.Run(new Logbook());
         }
     }

@@ -39,15 +39,11 @@ namespace Logbook
         private Log clipboardLog;
         private LogItem clipboardItem;
 
-        private readonly Stack<string> undoStack = new();
-        private readonly Stack<string> redoStack = new();
-
         private void OnLoad(object sender, EventArgs e)
         {
             AutoScaleMode = AutoScaleMode.Dpi;
             WindowState = FormWindowState.Maximized;
 
-            Paths.EnsureCreated();
             InitializeContentItemMenu();
             InitializeContentPanelMenu();
             InitializeLogItemMenu();
