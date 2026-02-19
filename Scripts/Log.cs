@@ -61,12 +61,8 @@ public class Log
             locked = true;
 
         string json = JsonConvert.SerializeObject(this, Formatting.Indented);
-        string dir = Path.Combine("Content", "Logs");
 
-        if (Directory.Exists(Paths.Logs)) Directory.CreateDirectory(Paths.Logs);
-
-        string safeTitle = string.Join("_", title.Split(Path.GetInvalidFileNameChars()));
-        string file = Path.Combine(Paths.Logs, safeTitle + ".json");
+        string file = Path.Combine(Paths.Logs, title + ".json");
 
         File.WriteAllText(file, json);
 

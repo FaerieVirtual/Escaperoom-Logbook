@@ -53,6 +53,7 @@ namespace Logbook
             InitializeLogPanelMenu();
             LoadAllLogs();
             LoadAllAccounts();
+            Paths.EnsureCreated();
 
             SetHomeDisplay();
         }
@@ -375,19 +376,19 @@ namespace Logbook
         #endregion
 
         #region Adding elements
-        public void AddImage(string filePath)
+        public void AddImage(string fileName)
         {
-            if (!File.Exists(filePath))
+            if (!File.Exists(Path.Combine(Paths.Images, fileName)))
             {
                 MessageBox.Show("Soubor neexistuje.");
                 return;
             }
 
-            Image img = Image.FromFile(filePath);
+            Image img = Image.FromFile(Path.Combine(Paths.Images, fileName));
 
             PictureBox pb = new()
             {
-                Name = filePath,
+                Name = fileName,
                 Tag = "LogDisplay",
                 Image = img,
                 SizeMode = PictureBoxSizeMode.Zoom,
@@ -433,13 +434,13 @@ namespace Logbook
             ContentPanel.Controls.Add(textBox);
         }
 
-        public void AddAudioRecording(string filepath)
+        public void AddAudioRecording(string fileName)
         {
-            if (File.Exists(filepath))
+            if (File.Exists(Path.Combine(Paths.Audio, fileName)))
             {
-                AudioRecordingStrip strip = new(filepath)
+                AudioRecordingStrip strip = new(fileName)
                 {
-                    Name = filepath,
+                    Name = fileName,
                     Tag = "LogDisplay",
                     ContextMenuStrip = contentItemMenu
                 };
@@ -489,13 +490,12 @@ namespace Logbook
 
                 string filePath = ofd.FileName;
                 string fileName = Path.GetFileName(filePath);
-                string destinationPath = Path.Combine("Content", fileName);
+                string destinationPath = Path.Combine(Paths.Audio, fileName);
                 if (File.Exists(filePath))
                 {
                     reader = new(ofd.FileName);
                     try
                     {
-                        if (!Directory.Exists("Content")) { Directory.CreateDirectory("Content"); }
                         File.Copy(filePath, destinationPath, true);
                     }
                     catch
@@ -509,7 +509,7 @@ namespace Logbook
                     MessageBox.Show("Vložení souboru selhalo z neznámých důvodů. Ujistěte se, že vybíráte správný typ souboru.", "Něco se pokazilo! :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                AddAudioRecording(destinationPath);
+                AddAudioRecording(fileName);
             }
             else
             {
@@ -537,12 +537,11 @@ namespace Logbook
 
                 string filePath = ofd.FileName;
                 string fileName = Path.GetFileName(filePath);
-                string destinationPath = Path.Combine("Content", fileName);
+                string destinationPath = Path.Combine(Paths.Images, fileName);
                 if (File.Exists(filePath))
                 {
                     try
                     {
-                        if (!Directory.Exists("Content")) { Directory.CreateDirectory("Content"); }
                         File.Copy(filePath, destinationPath, true);
                     }
                     catch
@@ -558,7 +557,7 @@ namespace Logbook
                 }
 
 
-                AddImage(destinationPath);
+                AddImage(fileName);
             }
             else
             {
