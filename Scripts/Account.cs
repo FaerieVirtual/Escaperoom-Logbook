@@ -77,11 +77,15 @@ namespace Logbook.Scripts
         {
             string JSON = JsonConvert.SerializeObject(this);
             string path = Path.Combine("Content", "Accounts");
-            if (!Path.Exists(path))
+            if (!Path.Exists(Paths.Accounts))
             {
-                Directory.CreateDirectory(path);
+                Directory.CreateDirectory(Paths.Accounts);
             }
-            File.WriteAllText(Path.Combine(path, name + ".json"), JSON);
+
+            string safeName = string.Join("_", name.Split(Path.GetInvalidFileNameChars()));
+            string file = Path.Combine(Paths.Accounts, safeName + ".json");
+
+            File.WriteAllText(file, JSON);
         }
 
         private void PrivatizeAll()

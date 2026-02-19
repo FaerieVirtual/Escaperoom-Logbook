@@ -417,7 +417,7 @@ namespace Logbook
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Logbook v.1.15";
             Load += OnLoad;
-            ClientSizeChanged += Resize;
+            ClientSizeChanged += ResizeOnClientSizeChanged;
             ((System.ComponentModel.ISupportInitialize)Home_Beehive).EndInit();
             ToolStrip.ResumeLayout(false);
             ToolStrip.PerformLayout();

@@ -110,10 +110,7 @@ namespace Logbook
 
         private void LoadAllLogs()
         {
-            string path = Path.Combine("Content", "Logs");
-            if (!Directory.Exists(path)) { Directory.CreateDirectory(path); }
-
-            foreach (var file in Directory.GetFiles(path, "*.json"))
+            foreach (var file in Directory.GetFiles(Paths.Logs, "*.json"))
             {
                 string json = File.ReadAllText(file);
                 Log log = JsonConvert.DeserializeObject<Log>(json);
@@ -135,7 +132,7 @@ namespace Logbook
             }
         }
 
-        public void Resize(object sender, EventArgs e)
+        public void ResizeOnClientSizeChanged(object sender, EventArgs e)
         {
             if (selectedLog != null)
             {
@@ -151,9 +148,7 @@ namespace Logbook
         #region Account Management
         private void LoadAllAccounts()
         {
-            string path = Path.Combine("Content", "Accounts");
-
-            foreach (var file in Directory.GetFiles(path, "*.json"))
+            foreach (var file in Directory.GetFiles(Paths.Accounts, "*.json"))
             {
                 string json = File.ReadAllText(file);
                 Account acc = JsonConvert.DeserializeObject<Account>(json);
