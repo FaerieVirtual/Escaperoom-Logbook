@@ -47,13 +47,13 @@ namespace Logbook
             AutoScaleMode = AutoScaleMode.Dpi;
             WindowState = FormWindowState.Maximized;
 
+            Paths.EnsureCreated();
             InitializeContentItemMenu();
             InitializeContentPanelMenu();
             InitializeLogItemMenu();
             InitializeLogPanelMenu();
             LoadAllLogs();
             LoadAllAccounts();
-            Paths.EnsureCreated();
 
             SetHomeDisplay();
         }
@@ -314,7 +314,7 @@ namespace Logbook
             {
                 PushUndoState();
                 logs.Remove(log);
-                File.Delete(Path.Combine("Content", "Logs", log.title + ".json"));
+                File.Delete(Path.Combine(Paths.Logs, log.title + ".json"));
                 LogPanel.Controls.Remove(logItemMenu.SourceControl);
             }
         }
@@ -329,7 +329,7 @@ namespace Logbook
 
                 if (string.IsNullOrWhiteSpace(newName)) return;
 
-                File.Delete(Path.Combine("Content", "Logs", log.title + ".json"));
+                File.Delete(Path.Combine(Paths.Logs, log.title + ".json"));
                 log.title = log.locked ? $"[🔒] {newName}" : $"[🔓] {newName}";
                 log.WriteToDisk();
 
@@ -566,41 +566,15 @@ namespace Logbook
         }
         private void Del_button_Click(object sender, EventArgs e)
         {
-            //if (currentAccount.auth == authentication)
-            //{
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Nelze upravit protokol v režimu čtení. Pokud chcete přidávat a upravovat protokoly, přihlaste se a zapněte režim úprav.", "Úprava v režimu čtení", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
-
         }
 
         private void Paste_button_Click(object sender, EventArgs e)
         {
-            //if (mode == LogMode.Edit)
-            //{
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Nelze upravit protokol v režimu čtení. Pokud chcete přidávat a upravovat protokoly, přihlaste se a zapněte režim úprav.", "Úprava v režimu čtení", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
-
         }
 
         private void Copy_Click(object sender, EventArgs e)
         {
-            //if (mode == LogMode.Edit)
-            //{
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Nelze upravit protokol v režimu čtení. Pokud chcete přidávat a upravovat protokoly, přihlaste se a zapněte režim úprav.", "Úprava v režimu čtení", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
-
         }
-
         private void Rename_Click(object sender, EventArgs e)
         {
             if (currentAccount != null && currentAccount.auth == Authorization.Admin)
@@ -611,11 +585,11 @@ namespace Logbook
 
                 if (string.IsNullOrWhiteSpace(newName)) return;
 
-                File.Delete(Path.Combine("Content", "Logs", selectedLog.title + ".json"));
+                File.Delete(Path.Combine(Paths.Logs, selectedLog.title + ".json"));
                 selectedLog.title = selectedLog.locked ? $"[🔒] {newName}" : $"[🔓] {newName}";
                 selectedLog.WriteToDisk();
 
-                ((System.Windows.Forms.Button)logItemMenu.SourceControl).Text = newName;
+                logItemMenu.SourceControl.Text = newName;
             }
             else
             {

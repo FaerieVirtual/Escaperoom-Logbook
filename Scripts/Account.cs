@@ -76,11 +76,6 @@ namespace Logbook.Scripts
         public void SaveAccount()
         {
             string JSON = JsonConvert.SerializeObject(this);
-            string path = Path.Combine("Content", "Accounts");
-            if (!Path.Exists(Paths.Accounts))
-            {
-                Directory.CreateDirectory(Paths.Accounts);
-            }
 
             string safeName = string.Join("_", name.Split(Path.GetInvalidFileNameChars()));
             string file = Path.Combine(Paths.Accounts, safeName + ".json");
