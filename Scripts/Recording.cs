@@ -3,77 +3,6 @@ using NAudio.Wave;
 using System;
 using System.Windows.Forms;
 
-//public class Recording
-//{
-//    public string name;
-//    public string path;
-//    public int volume;
-//    public double durationTime;
-//    public double currentTime;
-
-//    public WaveOutEvent output;
-//    public AudioFileReader audioFile;
-
-//    public void PlayPause(Button button)
-//    {
-//        if (output == null)
-//        {
-//            output = new WaveOutEvent();
-//            output.PlaybackStopped += OnPlaybackStopped;
-//        }
-//        if (audioFile.FileName != path)
-//        {
-//            output.Dispose();
-//            audioFile.Dispose();
-
-//            output = new WaveOutEvent();
-//            audioFile = new AudioFileReader(path);
-
-//            output.Init(audioFile);
-//        }
-
-//        if (output.PlaybackState == PlaybackState.Stopped || output.PlaybackState == PlaybackState.Paused) 
-//        { 
-//            output.Play();
-//            button.BackgroundImage = Resources.pause;
-//        }
-//        if (output.PlaybackState == PlaybackState.Playing) 
-//        {
-//            output.Pause();
-//            button.BackgroundImage = Resources.play;
-//        }
-//    }
-
-//    public void StopTrack(Button button, ProgressBar bar) 
-//    {
-//        if (output.PlaybackState != PlaybackState.Stopped)
-//        {
-//            output.Stop();
-//            button.BackgroundImage = Resources.play;
-//            bar.Value = 0;
-//        }
-//    }
-
-//    public void AdjustVolume(double value)
-//    {
-//        output.Volume = (int)value;
-//    }
-
-//    public void AdjustTrack(int value)
-//    {
-//        currentTime += value;
-//    }
-
-
-//    public void OnPlaybackStopped(object sender, EventArgs e)
-//    {
-//        output.Dispose();
-//        output = null;
-//        audioFile.Dispose();
-//        audioFile = null;
-//    }
-//}
-
 public class Recording
 {
     public string name;
@@ -87,7 +16,6 @@ public class Recording
 
     public void PlayPause(Button button)
     {
-        // Inicializace při prvním použití
         if (output == null || audioFile == null)
             InitPlayer();
 
@@ -140,12 +68,6 @@ public class Recording
 
         newPos = Math.Clamp(newPos, 0, audioFile.Length);
         audioFile.Position = newPos;
-    }
-
-    public void OnPlaybackStopped(object sender, EventArgs e)
-    {
-        // Zpět na začátek, ale nezlikvidovat, pokud to nechceš.
-        // DisposePlayer();  ← nedoporučuji, pokud chceš znovu přehrát bez znovunačtení
     }
 
     private void DisposePlayer()

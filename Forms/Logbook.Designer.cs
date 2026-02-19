@@ -206,7 +206,6 @@ namespace Logbook
             Undo_button.Name = "Undo_button";
             Undo_button.Size = new Size(83, 34);
             Undo_button.Text = "Zpět";
-            Undo_button.Click += Undo_button_Click;
             // 
             // Redo_button
             // 
@@ -216,7 +215,6 @@ namespace Logbook
             Redo_button.Name = "Redo_button";
             Redo_button.Size = new Size(93, 34);
             Redo_button.Text = "Znovu";
-            Redo_button.Click += Redo_button_Click;
             // 
             // ToolStrip
             // 

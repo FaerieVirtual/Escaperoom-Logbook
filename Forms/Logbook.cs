@@ -189,29 +189,6 @@ namespace Logbook
         }
         #endregion
 
-        #region Undo/redo
-        private void PushUndoState()
-        {
-            if (selectedLog == null) return;
-
-            selectedLog.SaveFromUI();
-
-            undoStack.Push(JsonConvert.SerializeObject(selectedLog));
-            redoStack.Clear();
-        }
-
-        private void RestoreLogState(string json)
-        {
-            Log restored = JsonConvert.DeserializeObject<Log>(json);
-            selectedLog = restored;
-
-            ContentPanel.Controls.Clear();
-            restored.Open(); // už umíš
-        }
-
-
-        #endregion
-
         #region Content Item Menu
         private void InitializeContentItemMenu()
         {
@@ -256,7 +233,6 @@ namespace Logbook
         {
             if (contentItemMenu.SourceControl is Control ctrl)
             {
-                PushUndoState();
                 ctrl.Parent.Controls.Remove(ctrl);
             }
         }
@@ -272,8 +248,6 @@ namespace Logbook
         private void Content_Paste_Click(object sender, EventArgs e)
         {
             if (clipboardItem == null) return;
-
-            PushUndoState();
 
             switch (clipboardItem.Type)
             {
@@ -312,7 +286,6 @@ namespace Logbook
         {
             if (logItemMenu.SourceControl?.Tag is Log log)
             {
-                PushUndoState();
                 logs.Remove(log);
                 File.Delete(Path.Combine(Paths.Logs, log.title + ".json"));
                 LogPanel.Controls.Remove(logItemMenu.SourceControl);
@@ -323,7 +296,6 @@ namespace Logbook
         {
             if (logItemMenu.SourceControl?.Tag is Log log)
             {
-                PushUndoState();
                 string newName = Microsoft.VisualBasic.Interaction.InputBox(
                     "Nový název protokolu:", "Přejmenovat", log.title);
 
@@ -463,7 +435,6 @@ namespace Logbook
         {
             if (currentAccount != null && currentAccount.auth == Authorization.Admin)
             {
-                PushUndoState();
                 AddTextfield();
             }
             else
@@ -475,8 +446,6 @@ namespace Logbook
         {
             if (currentAccount != null && currentAccount.auth == Authorization.Admin)
             {
-                PushUndoState();
-
                 using OpenFileDialog ofd = new();
                 ofd.AddExtension = true;
                 ofd.Filter = "All files (*.*)|*.*|MP3 files (*.mp3)|*.mp3|WAV files (*.wav)|*.wav|AIFF files (*.aiff)|*.aiff";
@@ -523,8 +492,6 @@ namespace Logbook
         {
             if (currentAccount != null && currentAccount.auth == Authorization.Admin)
             {
-                PushUndoState();
-
                 using OpenFileDialog ofd = new();
 
                 ofd.AddExtension = true;
@@ -579,7 +546,6 @@ namespace Logbook
         {
             if (currentAccount != null && currentAccount.auth == Authorization.Admin)
             {
-                PushUndoState();
                 string newName = Microsoft.VisualBasic.Interaction.InputBox(
                     "Nový název protokolu:", "Přejmenovat", selectedLog.title);
 
@@ -596,28 +562,6 @@ namespace Logbook
                 MessageBox.Show("Nelze upravit protokol v režimu čtení. Pokud chcete přidávat a upravovat protokoly, přihlaste se a zapněte režim úprav.", "Úprava v režimu čtení", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-        }
-
-        private void Undo_button_Click(object sender, EventArgs e)
-        {
-            if (currentAccount.auth == Authorization.Admin)
-            {
-                if (undoStack.Count == 0) return;
-
-                redoStack.Push(JsonConvert.SerializeObject(selectedLog));
-                RestoreLogState(undoStack.Pop());
-            }
-        }
-
-        private void Redo_button_Click(object sender, EventArgs e)
-        {
-            if (currentAccount.auth == Authorization.Admin)
-            {
-                if (redoStack.Count == 0) return;
-
-                undoStack.Push(JsonConvert.SerializeObject(selectedLog));
-                RestoreLogState(redoStack.Pop());
-            }
         }
 
         private void AddAccButton_Click(object sender, EventArgs e)
