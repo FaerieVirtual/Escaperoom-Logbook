@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Forms;
 
 public static class Paths
 {
@@ -17,6 +18,7 @@ public static class Paths
 
     public static void EnsureCreated()
     {
+        Directory.CreateDirectory(Base);
         Directory.CreateDirectory(Logs);
         Directory.CreateDirectory(Accounts);
         Directory.CreateDirectory(Images);
