@@ -1,5 +1,6 @@
 ﻿using Logbook.Forms;
 using Newtonsoft.Json;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -12,6 +13,7 @@ namespace Logbook.Scripts
         public string password;
         public string hint;
         public Authorization auth;
+        public Image profile;
 
         public LogInSuccess LogIn()
         {

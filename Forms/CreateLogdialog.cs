@@ -7,6 +7,7 @@ namespace Logbook.Forms
         public CreateLogdialog()
         {
             InitializeComponent();
+            AcceptButton = OKButton;
         }
         public bool privated;
         public Log log;

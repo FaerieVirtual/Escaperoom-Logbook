@@ -2,15 +2,18 @@
 using Logbook.Scripts;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Logbook.Forms
 {
     public partial class AddAccountDialog : Form
     {
+        private Image pic;
         public AddAccountDialog()
         {
             InitializeComponent();
+            AcceptButton = OKButton;
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -37,6 +40,7 @@ namespace Logbook.Forms
                 password = passwordBox.Text,
                 hint = hintBox.Text,
                 auth = Authorization.User,
+                profile = pic,
                 logged = false,
 
             };
@@ -71,6 +75,27 @@ namespace Logbook.Forms
                 passwordBox.UseSystemPasswordChar = true;
                 Refresh();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new();
+
+            ofd.AddExtension = true;
+            ofd.Filter = "All files (*.*)|*.*|PNG soubory (*.png)|*.png|JPEG soubory (*.jpeg)|*.jpeg|JPG soubory (*.jpg)|*.jpg";
+            ofd.Title = "Vyberte soubor:";
+
+            DialogResult success = ofd.ShowDialog();
+
+            if (success == DialogResult.Cancel) return;
+
+            string fileName = ofd.FileName;
+            string destinationPath = Path.Combine(Paths.Images, Path.GetFileName(fileName));
+
+            File.Copy(fileName, destinationPath, true);
+            PicButton.Text = Path.GetFileName(fileName);
+
+            pic = Image.FromFile(destinationPath);
         }
     }
 }

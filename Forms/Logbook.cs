@@ -5,7 +5,6 @@ using NAudio.Wave;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -360,10 +359,10 @@ namespace Logbook
                 Tag = "LogDisplay",
                 Image = img,
                 SizeMode = PictureBoxSizeMode.Zoom,
-                Width = ContentPanel.ClientSize.Width - 25,
+                Width = ContentPanel.ClientSize.Width - 140,
                 MaximumSize = new Size((int)img.HorizontalResolution * 10, (int)img.VerticalResolution) * 10,
-                Height = (int)((ContentPanel.ClientSize.Width - 25) * (img.Height / (double)img.Width)),
-                Margin = new Padding(10, 10, 10, 10),
+                Height = (int)((ContentPanel.ClientSize.Width - 20) * (img.Height / (double)img.Width)),
+                Margin = new Padding(70, 0, 70, 0),
                 ContextMenuStrip = contentItemMenu
             };
 
@@ -454,25 +453,11 @@ namespace Logbook
                 AudioFileReader reader;
 
                 string fileName = ofd.FileName;
-                string destinationPath = Path.Combine(Paths.Audio, fileName);
-                if (File.Exists(fileName))
-                {
-                    reader = new(ofd.FileName);
-                    try
-                    {
-                        File.Copy(fileName, destinationPath, true);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Vložení souboru selhalo z neznámých důvodů. Ujistěte se, že vybíráte správný typ souboru.", "Něco se pokazilo! :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Vložení souboru selhalo z neznámých důvodů. Ujistěte se, že vybíráte správný typ souboru.", "Něco se pokazilo! :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                string destinationPath = Path.Combine(Paths.Audio, Path.GetFileName(fileName));
+                
+                reader = new(ofd.FileName);
+                File.Copy(fileName, destinationPath, true);
+                
                 AddAudioRecording(fileName);
             }
             else
@@ -498,25 +483,9 @@ namespace Logbook
                 if (success == DialogResult.Cancel) return;
 
                 string fileName = ofd.FileName;
-                string destinationPath = Path.Combine(Paths.Images, fileName);
-                if (File.Exists(fileName))
-                {
-                    try
-                    {
-                        File.Copy(fileName, destinationPath, true);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Vložení souboru selhalo z neznámých důvodů. Ujistěte se, že vybíráte správný typ souboru.", "Něco se pokazilo! :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Vložení souboru selhalo z neznámých důvodů. Ujistěte se, že vybíráte správný typ souboru.", "Něco se pokazilo! :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                string destinationPath = Path.Combine(Paths.Images, Path.GetFileName(fileName));
 
+                File.Copy(fileName, destinationPath, true);
 
                 AddImage(fileName);
             }

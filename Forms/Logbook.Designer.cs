@@ -63,13 +63,13 @@ namespace Logbook
             ContentPanel = new FlowLayoutPanel();
             AuthorBox = new TextBox();
             LogTitle = new TextBox();
-            pictureBox1 = new PictureBox();
+            ProfileBox = new PictureBox();
             LogPanel = new FlowLayoutPanel();
             MainPanel = new TableLayoutPanel();
             LeftPanel = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)Home_Beehive).BeginInit();
             ToolStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ProfileBox).BeginInit();
             MainPanel.SuspendLayout();
             LeftPanel.SuspendLayout();
             SuspendLayout();
@@ -227,7 +227,7 @@ namespace Logbook
             ToolStrip.Name = "ToolStrip";
             ToolStrip.Padding = new Padding(0);
             ToolStrip.RenderMode = ToolStripRenderMode.Professional;
-            ToolStrip.Size = new Size(1440, 37);
+            ToolStrip.Size = new Size(1262, 37);
             ToolStrip.TabIndex = 2;
             ToolStrip.Text = "toolStrip1";
             // 
@@ -296,13 +296,15 @@ namespace Logbook
             // ContentPanel
             // 
             ContentPanel.AutoScroll = true;
+            ContentPanel.HorizontalScroll.Enabled = false;
+            ContentPanel.HorizontalScroll.Visible = false;
             ContentPanel.BorderStyle = BorderStyle.Fixed3D;
             ContentPanel.Dock = DockStyle.Fill;
             ContentPanel.FlowDirection = FlowDirection.TopDown;
-            ContentPanel.Location = new Point(10, 282);
+            ContentPanel.Location = new Point(10, 235);
             ContentPanel.Margin = new Padding(10);
             ContentPanel.Name = "ContentPanel";
-            ContentPanel.Size = new Size(994, 568);
+            ContentPanel.Size = new Size(816, 468);
             ContentPanel.TabIndex = 3;
             ContentPanel.Tag = "LogDisplay";
             ContentPanel.WrapContents = false;
@@ -333,32 +335,34 @@ namespace Logbook
             LogTitle.TabIndex = 5;
             LogTitle.Tag = "LogDisplay";
             // 
-            // pictureBox1
+            // ProfileBox
             // 
-            pictureBox1.BackgroundImage = (Image)resources.GetObject("pictureBox1.BackgroundImage");
-            pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
-            pictureBox1.Location = new Point(35, 60);
-            pictureBox1.Margin = new Padding(6);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(200, 200);
-            pictureBox1.TabIndex = 4;
-            pictureBox1.TabStop = false;
-            pictureBox1.Tag = "LogDisplay";
+            ProfileBox.BackgroundImage = (Image)resources.GetObject("ProfileBox.BackgroundImage");
+            ProfileBox.BackgroundImageLayout = ImageLayout.Zoom;
+            ProfileBox.Location = new Point(35, 60);
+            ProfileBox.Margin = new Padding(6);
+            ProfileBox.Name = "ProfileBox";
+            ProfileBox.Size = new Size(180, 163);
+            ProfileBox.TabIndex = 4;
+            ProfileBox.TabStop = false;
+            ProfileBox.Tag = "LogDisplay";
             // 
             // LogPanel
             // 
             LogPanel.AutoScroll = true;
+            LogPanel.HorizontalScroll.Enabled = false;
+            LogPanel.HorizontalScroll.Visible = false;
             LogPanel.BackColor = SystemColors.Control;
             LogPanel.BorderStyle = BorderStyle.Fixed3D;
             LogPanel.Dock = DockStyle.Fill;
             LogPanel.FlowDirection = FlowDirection.TopDown;
-            LogPanel.Location = new Point(1030, 44);
+            LogPanel.Location = new Point(852, 44);
             LogPanel.Margin = new Padding(10);
             LogPanel.MaximumSize = new Size(400, 10000);
             LogPanel.MinimumSize = new Size(400, 100);
             LogPanel.Name = "LogPanel";
-            LogPanel.Padding = new Padding(10, 50, 10, 10);
-            LogPanel.Size = new Size(400, 846);
+            LogPanel.Padding = new Padding(10);
+            LogPanel.Size = new Size(400, 699);
             LogPanel.TabIndex = 0;
             LogPanel.WrapContents = false;
             // 
@@ -375,7 +379,7 @@ namespace Logbook
             MainPanel.RowCount = 2;
             MainPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
             MainPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            MainPanel.Size = new Size(1440, 900);
+            MainPanel.Size = new Size(1262, 753);
             MainPanel.TabIndex = 11;
             // 
             // LeftPanel
@@ -389,7 +393,7 @@ namespace Logbook
             LeftPanel.RowCount = 2;
             LeftPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 31.6554813F));
             LeftPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 68.34452F));
-            LeftPanel.Size = new Size(1014, 860);
+            LeftPanel.Size = new Size(836, 713);
             LeftPanel.TabIndex = 1;
             LeftPanel.Tag = "LogDisplay";
             // 
@@ -398,7 +402,7 @@ namespace Logbook
             AutoScaleMode = AutoScaleMode.None;
             BackColor = SystemColors.Control;
             BackgroundImageLayout = ImageLayout.Zoom;
-            MinimumSize = new Size(1280, 800);
+            ClientSize = new Size(1262, 753);
             Controls.Add(DateLabel);
             Controls.Add(TimeLabel);
             Controls.Add(Home_Beehive);
@@ -406,11 +410,12 @@ namespace Logbook
             Controls.Add(AuthorBox);
             Controls.Add(LogTitle);
             Controls.Add(DateTimeBox);
-            Controls.Add(pictureBox1);
+            Controls.Add(ProfileBox);
             Controls.Add(MainPanel);
             Font = new Font("Courier New", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 238);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(6);
+            MinimumSize = new Size(1280, 800);
             Name = "Logbook";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Logbook v.1.15";
@@ -419,7 +424,7 @@ namespace Logbook
             ((System.ComponentModel.ISupportInitialize)Home_Beehive).EndInit();
             ToolStrip.ResumeLayout(false);
             ToolStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ProfileBox).EndInit();
             MainPanel.ResumeLayout(false);
             LeftPanel.ResumeLayout(false);
             ResumeLayout(false);
@@ -456,9 +461,9 @@ namespace Logbook
         public FlowLayoutPanel ContentPanel;
         public TextBox AuthorBox;
         public TextBox LogTitle;
-        private PictureBox pictureBox1;
         public FlowLayoutPanel LogPanel;
         private TableLayoutPanel MainPanel;
         private TableLayoutPanel LeftPanel;
+        public PictureBox ProfileBox;
     }
 }

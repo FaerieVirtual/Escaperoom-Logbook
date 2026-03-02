@@ -38,13 +38,15 @@ namespace Logbook.Forms
             label2 = new Label();
             label3 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
+            PicLabel = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             passwordBox = new TextBox();
             HiddenButton = new Button();
-            label4 = new Label();
             NameBox = new TextBox();
-            WarningLabel = new Label();
             hintBox = new TextBox();
+            label4 = new Label();
+            PicButton = new Button();
+            WarningLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -133,22 +135,36 @@ namespace Logbook.Forms
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23.3209F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 76.6791F));
+            tableLayoutPanel1.Controls.Add(PicLabel, 0, 2);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 1);
-            tableLayoutPanel1.Controls.Add(label4, 0, 2);
             tableLayoutPanel1.Controls.Add(label3, 0, 1);
             tableLayoutPanel1.Controls.Add(label2, 0, 0);
             tableLayoutPanel1.Controls.Add(NameBox, 1, 0);
-            tableLayoutPanel1.Controls.Add(hintBox, 1, 2);
+            tableLayoutPanel1.Controls.Add(hintBox, 1, 3);
+            tableLayoutPanel1.Controls.Add(label4, 0, 3);
+            tableLayoutPanel1.Controls.Add(PicButton, 1, 2);
             tableLayoutPanel1.Location = new System.Drawing.Point(236, 151);
             tableLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowCount = 4;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
             tableLayoutPanel1.Size = new System.Drawing.Size(536, 250);
             tableLayoutPanel1.TabIndex = 10;
+            // 
+            // PicLabel
+            // 
+            PicLabel.Anchor = AnchorStyles.None;
+            PicLabel.AutoSize = true;
+            PicLabel.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
+            PicLabel.Location = new System.Drawing.Point(10, 114);
+            PicLabel.Name = "PicLabel";
+            PicLabel.Size = new System.Drawing.Size(106, 22);
+            PicLabel.TabIndex = 19;
+            PicLabel.Text = "Obrázek:";
+            PicLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tableLayoutPanel2
             // 
@@ -193,17 +209,6 @@ namespace Logbook.Forms
             HiddenButton.UseVisualStyleBackColor = true;
             HiddenButton.Click += HiddenButton_Click;
             // 
-            // label4
-            // 
-            label4.Anchor = AnchorStyles.None;
-            label4.AutoSize = true;
-            label4.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
-            label4.Location = new System.Drawing.Point(4, 164);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(118, 22);
-            label4.TabIndex = 13;
-            label4.Text = "Nápověda:";
-            // 
             // NameBox
             // 
             NameBox.Anchor = AnchorStyles.None;
@@ -214,6 +219,38 @@ namespace Logbook.Forms
             NameBox.Size = new System.Drawing.Size(403, 30);
             NameBox.TabIndex = 11;
             // 
+            // hintBox
+            // 
+            hintBox.Dock = DockStyle.Fill;
+            hintBox.Location = new System.Drawing.Point(129, 154);
+            hintBox.Multiline = true;
+            hintBox.Name = "hintBox";
+            hintBox.Size = new System.Drawing.Size(403, 92);
+            hintBox.TabIndex = 18;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.None;
+            label4.AutoSize = true;
+            label4.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
+            label4.Location = new System.Drawing.Point(4, 189);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(118, 22);
+            label4.TabIndex = 13;
+            label4.Text = "Nápověda:";
+            // 
+            // PicButton
+            // 
+            PicButton.Dock = DockStyle.Fill;
+            PicButton.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Italic);
+            PicButton.Location = new System.Drawing.Point(129, 104);
+            PicButton.Name = "PicButton";
+            PicButton.Size = new System.Drawing.Size(403, 43);
+            PicButton.TabIndex = 20;
+            PicButton.Text = "Zvolit";
+            PicButton.UseVisualStyleBackColor = true;
+            PicButton.Click += button1_Click;
+            // 
             // WarningLabel
             // 
             WarningLabel.Font = new System.Drawing.Font("Courier New", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
@@ -223,15 +260,6 @@ namespace Logbook.Forms
             WarningLabel.Size = new System.Drawing.Size(580, 42);
             WarningLabel.TabIndex = 11;
             WarningLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // hintBox
-            // 
-            hintBox.Dock = DockStyle.Fill;
-            hintBox.Location = new System.Drawing.Point(129, 104);
-            hintBox.Multiline = true;
-            hintBox.Name = "hintBox";
-            hintBox.Size = new System.Drawing.Size(403, 142);
-            hintBox.TabIndex = 18;
             // 
             // AddAccountDialog
             // 
@@ -273,5 +301,7 @@ namespace Logbook.Forms
         public TextBox passwordBox;
         private Label WarningLabel;
         private TextBox hintBox;
+        private Label PicLabel;
+        private Button PicButton;
     }
 }

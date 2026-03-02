@@ -11,6 +11,7 @@ namespace Logbook.Forms
         public LogInDialog()
         {
             InitializeComponent();
+            AcceptButton = OKButton;
         }
 
         private void BackButton_Click(object sender, EventArgs e)

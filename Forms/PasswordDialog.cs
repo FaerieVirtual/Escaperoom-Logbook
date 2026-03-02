@@ -1,6 +1,7 @@
-﻿using Logbook.Properties;
+﻿using System.Windows.Input;
 using System;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.Devices;
 
 namespace Logbook.Forms
 {
@@ -9,6 +10,7 @@ namespace Logbook.Forms
         public PasswordDialog()
         {
             InitializeComponent();
+            AcceptButton = OKButton;
         }
         
         private void OnLoad(object sender, EventArgs e) 
@@ -23,10 +25,7 @@ namespace Logbook.Forms
                 WarningLabel.Text = "Heslo není správné.";
                 return;
             }
-
-            log.locked = false;
-            Logbook.logbook.SetLogDisplay();
-            log.LoadToUI();
+            DialogResult = DialogResult.OK;
 
             Close();
         }

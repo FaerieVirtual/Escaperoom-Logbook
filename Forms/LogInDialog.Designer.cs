@@ -31,7 +31,7 @@ namespace Logbook.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            pictureBox1 = new PictureBox();
+            Profilebox = new PictureBox();
             label1 = new Label();
             BackButton = new Button();
             OKButton = new Button();
@@ -45,24 +45,24 @@ namespace Logbook.Forms
             label4 = new Label();
             NameBox = new TextBox();
             WarningLabel = new Label();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Profilebox).BeginInit();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             SuspendLayout();
             // 
-            // pictureBox1
+            // Profilebox
             // 
-            pictureBox1.BackgroundImageLayout = ImageLayout.None;
-            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Image = Resources.pass;
-            pictureBox1.Location = new System.Drawing.Point(27, 151);
-            pictureBox1.Margin = new Padding(6, 8, 6, 8);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new System.Drawing.Size(200, 250);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 5;
-            pictureBox1.TabStop = false;
-            pictureBox1.Tag = "LogDisplay";
+            Profilebox.BackgroundImageLayout = ImageLayout.None;
+            Profilebox.BorderStyle = BorderStyle.FixedSingle;
+            Profilebox.Image = Resources.pass;
+            Profilebox.Location = new System.Drawing.Point(27, 179);
+            Profilebox.Margin = new Padding(6, 8, 6, 8);
+            Profilebox.Name = "Profilebox";
+            Profilebox.Size = new System.Drawing.Size(200, 200);
+            Profilebox.SizeMode = PictureBoxSizeMode.Zoom;
+            Profilebox.TabIndex = 5;
+            Profilebox.TabStop = false;
+            Profilebox.Tag = "LogDisplay";
             // 
             // label1
             // 
@@ -243,11 +243,11 @@ namespace Logbook.Forms
             Controls.Add(BackButton);
             Controls.Add(OKButton);
             Controls.Add(label1);
-            Controls.Add(pictureBox1);
+            Controls.Add(Profilebox);
             Margin = new Padding(3, 4, 3, 4);
             Name = "LogInDialog";
             Text = "Logbook v.1.15 - Přihlášení";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Profilebox).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
@@ -259,7 +259,7 @@ namespace Logbook.Forms
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox Profilebox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button BackButton;
         private System.Windows.Forms.Button OKButton;

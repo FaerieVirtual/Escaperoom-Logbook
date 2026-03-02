@@ -1,4 +1,5 @@
 ﻿using Logbook.Forms;
+using Logbook.Scripts;
 using Microsoft.VisualBasic.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -77,6 +78,14 @@ public class Log
         logbook.AuthorBox.Text = "Autor: " + author;
         logbook.DateTimeBox.Text = date + ", " + time;
 
+        foreach (Account acc in logbook.accounts)
+        {
+            if (author == acc.name)
+            {
+                if (acc.profile != null) logbook.ProfileBox.BackgroundImage = acc.profile;
+            }
+        }
+
         logbook.ContentPanel.Controls.Clear();
 
         foreach (var item in Content)
@@ -114,8 +123,8 @@ public class Log
         {
             PasswordDialog dlg = new() { log = this };
             dlg.LogTitleBox.Text = title;
-            dlg.ShowDialog();
-            return;
+            if (dlg.ShowDialog() != DialogResult.OK) return;
+            locked = false;
         }
 
         logbook.SetLogDisplay();
