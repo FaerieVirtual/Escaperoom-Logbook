@@ -95,7 +95,7 @@ namespace Logbook.Forms
             File.Copy(fileName, destinationPath, true);
             PicButton.Text = Path.GetFileName(fileName);
 
-            pic = destinationPath;
+            pic = Path.GetFileName(fileName);
         }
     }
 }
