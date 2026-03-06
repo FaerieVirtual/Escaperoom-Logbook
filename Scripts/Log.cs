@@ -77,12 +77,16 @@ public class Log
         logbook.AuthorBox.Text = "Autor: " + author;
         logbook.DateTimeBox.Text = date + ", " + time;
 
-        foreach (Account acc in logbook.accounts)
+        logbook.ProfileBox.BackgroundImage = null;
+
+        Account acc = logbook.accounts.Find(a => a.name == author);
+
+        if (acc != null && !string.IsNullOrEmpty(acc.profile))
         {
-            if (author == acc.name)
-            {
-                if (acc.profile != null) logbook.ProfileBox.BackgroundImage = Image.FromFile(Path.Combine(Paths.Images, acc.profile));
-            }
+            string path = Path.Combine(Paths.Images, acc.profile);
+
+            if (File.Exists(path))
+                logbook.ProfileBox.BackgroundImage = Image.FromFile(path);
         }
 
         logbook.ContentPanel.Controls.Clear();
