@@ -1,6 +1,5 @@
 ﻿using Logbook.Forms;
 using Logbook.Scripts;
-using Microsoft.VisualBasic.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Drawing;
@@ -111,6 +110,16 @@ public class Log
     {
         var logbook = Logbook.Logbook.logbook;
 
+        if (locked)
+        {
+            PasswordDialog dlg = new() { log = this };
+            dlg.LogTitleBox.Text = title;
+
+            if (dlg.ShowDialog() != DialogResult.OK) return;
+
+            locked = false;
+        }
+
         if (logbook.selectedLog != null)
         {
             logbook.selectedLog.SaveFromUI();
@@ -118,14 +127,6 @@ public class Log
         }
 
         logbook.selectedLog = this;
-
-        if (locked)
-        {
-            PasswordDialog dlg = new() { log = this };
-            dlg.LogTitleBox.Text = title;
-            if (dlg.ShowDialog() != DialogResult.OK) return;
-            locked = false;
-        }
 
         logbook.SetLogDisplay();
         LoadToUI();

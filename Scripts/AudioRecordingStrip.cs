@@ -63,7 +63,7 @@ public class AudioRecordingStrip : UserControl
         output.Init(audioFile);
 
         ProgressBar.Maximum = (int)(audioFile.Length / 1000);
-        NameLabel.Text = audioFile.FileName;
+        NameLabel.Text = Path.GetFileName(audioFile.FileName);
     }
 
     public void StopTrack(ProgressBar bar)
