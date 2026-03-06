@@ -77,17 +77,25 @@ public class Log
         logbook.AuthorBox.Text = "Autor: " + author;
         logbook.DateTimeBox.Text = date + ", " + time;
 
-        logbook.ProfileBox.BackgroundImage = null;
-
         Account acc = logbook.accounts.Find(a => a.name == author);
 
-        if (acc != null && !string.IsNullOrEmpty(acc.profile))
-        {
-            string path = Path.Combine(Paths.Images, acc.profile);
+        //if (acc != null && !string.IsNullOrEmpty(acc.profile))
+        //{
+        //    string path = Path.Combine(Paths.Images, acc.profile);
 
-            if (File.Exists(path))
-                logbook.ProfileBox.BackgroundImage = Image.FromFile(path);
-        }
+        //    if (File.Exists(path))
+        //    {
+        //        PictureBox pb = new()
+        //        {
+        //            Name = "ProfileBox",
+        //            Tag = "LogDisplay",
+        //            Image = Image.FromFile(path),
+        //            SizeMode = PictureBoxSizeMode.Zoom,
+        //            MaximumSize = new Size(180, 180),
+        //        };
+        //        logbook.ProfileBox = pb;
+        //    }
+        //}
 
         logbook.ContentPanel.Controls.Clear();
 

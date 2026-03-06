@@ -296,8 +296,6 @@ namespace Logbook
             // ContentPanel
             // 
             ContentPanel.AutoScroll = true;
-            ContentPanel.HorizontalScroll.Enabled = false;
-            ContentPanel.HorizontalScroll.Visible = false;
             ContentPanel.BorderStyle = BorderStyle.Fixed3D;
             ContentPanel.Dock = DockStyle.Fill;
             ContentPanel.FlowDirection = FlowDirection.TopDown;
@@ -337,8 +335,10 @@ namespace Logbook
             // 
             // ProfileBox
             // 
-            ProfileBox.BackgroundImage = (Image)resources.GetObject("ProfileBox.BackgroundImage");
             ProfileBox.BackgroundImageLayout = ImageLayout.Zoom;
+            ProfileBox.SizeMode = PictureBoxSizeMode.Zoom;
+            ProfileBox.BorderStyle = BorderStyle.FixedSingle;
+            ProfileBox.Image = (Image)resources.GetObject("ProfileBox.Image");
             ProfileBox.Location = new Point(35, 60);
             ProfileBox.Margin = new Padding(6);
             ProfileBox.Name = "ProfileBox";
@@ -350,8 +350,6 @@ namespace Logbook
             // LogPanel
             // 
             LogPanel.AutoScroll = true;
-            LogPanel.HorizontalScroll.Enabled = false;
-            LogPanel.HorizontalScroll.Visible = false;
             LogPanel.BackColor = SystemColors.Control;
             LogPanel.BorderStyle = BorderStyle.Fixed3D;
             LogPanel.Dock = DockStyle.Fill;
