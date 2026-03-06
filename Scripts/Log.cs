@@ -77,13 +77,13 @@ public class Log
         logbook.AuthorBox.Text = "Autor: " + author;
         logbook.DateTimeBox.Text = date + ", " + time;
 
-        foreach (Account acc in logbook.accounts)
-        {
-            if (author == acc.name)
-            {
-                if (acc.profile != null) logbook.ProfileBox.BackgroundImage = acc.profile;
-            }
-        }
+        //foreach (Account acc in logbook.accounts)
+        //{
+        //    if (author == acc.name)
+        //    {
+        //        if (acc.profile != null) logbook.ProfileBox.BackgroundImage = acc.profile;
+        //    }
+        //}
 
         logbook.ContentPanel.Controls.Clear();
 
