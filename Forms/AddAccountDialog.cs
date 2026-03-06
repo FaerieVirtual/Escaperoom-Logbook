@@ -9,7 +9,7 @@ namespace Logbook.Forms
 {
     public partial class AddAccountDialog : Form
     {
-        private Image pic;
+        private string pic;
         public AddAccountDialog()
         {
             InitializeComponent();
@@ -95,7 +95,7 @@ namespace Logbook.Forms
             File.Copy(fileName, destinationPath, true);
             PicButton.Text = Path.GetFileName(fileName);
 
-            pic = Image.FromFile(destinationPath);
+            pic = destinationPath;
         }
     }
 }

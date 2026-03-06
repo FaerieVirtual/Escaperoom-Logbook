@@ -81,7 +81,7 @@ public class Log
         {
             if (author == acc.name)
             {
-                if (acc.profile != null) logbook.ProfileBox.BackgroundImage = acc.profile;
+                if (acc.profile != null) logbook.ProfileBox.BackgroundImage = Image.FromFile(acc.profile);
             }
         }
 
