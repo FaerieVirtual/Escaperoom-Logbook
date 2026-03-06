@@ -1,6 +1,7 @@
 ﻿using Logbook.Forms;
 using Logbook.Properties;
 using Logbook.Scripts;
+using Microsoft.VisualBasic.Logging;
 using NAudio.Wave;
 using Newtonsoft.Json;
 using System;
@@ -51,6 +52,12 @@ namespace Logbook
             LoadAllAccounts();
 
             SetHomeDisplay();
+
+            Log log = logs.Find(l => l.title == "Vítejte!");
+            Button btn = log.CreateLogButton();
+            btn.Enabled = true;
+            btn.Visible = true;
+            LogPanel.Controls.Add(btn);
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
@@ -355,7 +362,7 @@ namespace Logbook
 
             PictureBox pb = new()
             {
-                Name = fileName,
+                Name = Path.GetFileName(fileName),
                 Tag = "LogDisplay",
                 Image = img,
                 SizeMode = PictureBoxSizeMode.Zoom,
@@ -407,9 +414,10 @@ namespace Logbook
             {
                 AudioRecordingStrip strip = new(fileName)
                 {
-                    Name = fileName,
+                    Name = Path.GetFileName(fileName),
                     Tag = "LogDisplay",
-                    ContextMenuStrip = contentItemMenu
+                    ContextMenuStrip = contentItemMenu,
+                    Margin = new Padding(50, 10, 20, 10)
                 };
                 ContentPanel.Controls.Add(strip);
             }

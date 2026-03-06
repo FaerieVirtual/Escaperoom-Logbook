@@ -167,11 +167,12 @@ namespace Logbook.Forms
             // 
             HintBox.AutoSize = true;
             HintBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            HintBox.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
+            HintBox.Font = new System.Drawing.Font("Courier New", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 238);
             HintBox.Location = new System.Drawing.Point(129, 101);
             HintBox.Name = "HintBox";
             HintBox.Size = new System.Drawing.Size(403, 148);
             HintBox.TabIndex = 14;
+            HintBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label4
             // 

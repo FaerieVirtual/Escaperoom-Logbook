@@ -1,6 +1,6 @@
 ﻿using Logbook.Scripts;
-using Newtonsoft.Json;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -8,10 +8,20 @@ namespace Logbook.Forms
 {
     public partial class LogInDialog : Form
     {
+        public Account Account;
         public LogInDialog()
         {
             InitializeComponent();
             AcceptButton = OKButton;
+        }
+
+        public void OnLoad(object sender, EventArgs e)
+        {
+            string path = Path.Combine(Paths.Images, Account.profile);
+            if (Account != null && path != null)
+            {
+                Profilebox.Image = Image.FromFile(path);
+            }
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -21,38 +31,34 @@ namespace Logbook.Forms
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            foreach (Account acc in Logbook.logbook.accounts) 
+            if (Account.password == passwordBox.Text)
             {
-                if (acc.name == NameBox.Text && acc.password == passwordBox.Text)
+                Account.logged = true;
+                PrivatizeAll();
+                if (Account.auth == Authorization.Admin)
                 {
-                    acc.logged = true;
-                    PrivatizeAll();
-                    if (acc.auth == Authorization.Admin)
+                    foreach (Log log in Logbook.logbook.logs)
                     {
-                        foreach (Log log in Logbook.logbook.logs)
+                        if (log.privated)
                         {
-                            if (log.privated)
-                            {
-                                FlowLayoutPanel LogPanel = Logbook.logbook.LogPanel;
+                            FlowLayoutPanel LogPanel = Logbook.logbook.LogPanel;
 
-                                ProduceButton(log);
-                            }
-                        }
-
-                    }
-                    else 
-                    {
-                        foreach (Log log in Logbook.logbook.logs)
-                        {
-                            if (log.privated && log.author == acc.name)
-                            {
-                                FlowLayoutPanel LogPanel = Logbook.logbook.LogPanel;
-
-                                ProduceButton(log);
-                            }
+                            ProduceButton(log);
                         }
                     }
-                    break;
+
+                }
+                else
+                {
+                    foreach (Log log in Logbook.logbook.logs)
+                    {
+                        if (log.privated && log.author == Account.name)
+                        {
+                            FlowLayoutPanel LogPanel = Logbook.logbook.LogPanel;
+
+                            ProduceButton(log);
+                        }
+                    }
                 }
             }
 
@@ -73,13 +79,13 @@ namespace Logbook.Forms
             }
         }
 
-        private void PrivatizeAll() 
-        { 
-            foreach(Log log in Logbook.logbook.logs)
+        private void PrivatizeAll()
+        {
+            foreach (Log log in Logbook.logbook.logs)
             {
-                if(log.privated)
+                if (log.privated)
                 {
-                    foreach(Control ctrl in Logbook.logbook.LogPanel.Controls)
+                    foreach (Control ctrl in Logbook.logbook.LogPanel.Controls)
                     {
                         if (ctrl.Name == log.title)
                         {
@@ -91,13 +97,13 @@ namespace Logbook.Forms
             }
         }
 
-        private void ProduceButton(Log log) 
+        private void ProduceButton(Log log)
         {
             bool found = false;
 
-            foreach(Control ctrl in Logbook.logbook.LogPanel.Controls)
+            foreach (Control ctrl in Logbook.logbook.LogPanel.Controls)
             {
-                if(ctrl.Name == log.title)
+                if (ctrl.Name == log.title)
                 {
                     ctrl.Visible = true;
                     ctrl.Enabled = true;

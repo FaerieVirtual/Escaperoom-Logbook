@@ -196,11 +196,12 @@ namespace Logbook.Forms
             // 
             HintBox.AutoSize = true;
             HintBox.Dock = DockStyle.Fill;
-            HintBox.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 238);
+            HintBox.Font = new System.Drawing.Font("Courier New", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 238);
             HintBox.Location = new System.Drawing.Point(129, 101);
             HintBox.Name = "HintBox";
             HintBox.Size = new System.Drawing.Size(403, 148);
             HintBox.TabIndex = 14;
+            HintBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label4
             // 
@@ -220,6 +221,7 @@ namespace Logbook.Forms
             NameBox.Location = new System.Drawing.Point(129, 10);
             NameBox.Margin = new Padding(3, 4, 3, 4);
             NameBox.Name = "NameBox";
+            NameBox.ReadOnly = true;
             NameBox.Size = new System.Drawing.Size(403, 30);
             NameBox.TabIndex = 11;
             // 
@@ -247,6 +249,7 @@ namespace Logbook.Forms
             Margin = new Padding(3, 4, 3, 4);
             Name = "LogInDialog";
             Text = "Logbook v.1.15 - Přihlášení";
+            Load += OnLoad;
             ((System.ComponentModel.ISupportInitialize)Profilebox).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();

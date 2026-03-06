@@ -79,23 +79,15 @@ public class Log
 
         Account acc = logbook.accounts.Find(a => a.name == author);
 
-        //if (acc != null && !string.IsNullOrEmpty(acc.profile))
-        //{
-        //    string path = Path.Combine(Paths.Images, acc.profile);
+        if (acc != null && !string.IsNullOrEmpty(acc.profile))
+        {
+            string path = Path.Combine(Paths.Images, acc.profile);
 
-        //    if (File.Exists(path))
-        //    {
-        //        PictureBox pb = new()
-        //        {
-        //            Name = "ProfileBox",
-        //            Tag = "LogDisplay",
-        //            Image = Image.FromFile(path),
-        //            SizeMode = PictureBoxSizeMode.Zoom,
-        //            MaximumSize = new Size(180, 180),
-        //        };
-        //        logbook.ProfileBox = pb;
-        //    }
-        //}
+            if (File.Exists(path))
+            {
+                logbook.ProfileBox.Image = Image.FromFile(path);
+            }
+        }
 
         logbook.ContentPanel.Controls.Clear();
 

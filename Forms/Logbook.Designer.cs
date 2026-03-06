@@ -336,7 +336,7 @@ namespace Logbook
             // ProfileBox
             // 
             ProfileBox.BackgroundImageLayout = ImageLayout.Zoom;
-            ProfileBox.SizeMode = PictureBoxSizeMode.Zoom;
+            ProfileBox.SizeMode = PictureBoxSizeMode.StretchImage;
             ProfileBox.BorderStyle = BorderStyle.FixedSingle;
             ProfileBox.Image = (Image)resources.GetObject("ProfileBox.Image");
             ProfileBox.Location = new Point(35, 60);

@@ -2,19 +2,19 @@
   "title": "Paranoia",
   "locked": true,
   "password": "84592",
-  "hint": "V kazetě.",
+  "hint": "Pod postelí mám přehrávač.",
   "author": "Soňa Zahradníková",
   "date": "26.08.2024",
   "time": "06:54:42",
   "privated": true,
   "Content": [
     {
-      "Type": 0,
-      "Data": "Jakubovi asi přeskočilo. Najednou už nikomu z nás nevěří. Zčistajasna začal do všeho zabudovávat bezpečnostní opatření a rébusy. Nevím, jak dlouho to tady ještě vydržím s tímhle vývojem. Jsme vědci, zatraceně, ne postavy z levné detektivky. \r\n\r\nUž z toho taky šílím. Mám pocit, že už moje poznámky nejsou v bezpečí ani tady. Brzy asi začnu psát UV fixou na stěny. Bílých ploch je tu dost."
+      "Type": 2,
+      "Data": "Nikomu nevěř.mp3"
     },
     {
-      "Type": 0,
-      "Data": "Původně jsem to psala jako vtip, ale teď to reálně zvažuji. Asi si tu někde nechám UV světýlko. Myslím, že jsem viděla Jakuba zapisovat nějaké heslo, které je důležité, ale nevím k čemu. Nevěřím téhle aplikaci."
+      "Type": 2,
+      "Data": "Není tu bezpečno.mp3"
     }
   ]
 }

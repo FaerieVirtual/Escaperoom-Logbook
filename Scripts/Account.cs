@@ -1,6 +1,6 @@
 ﻿using Logbook.Forms;
+using Microsoft.VisualBasic.Logging;
 using Newtonsoft.Json;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -19,7 +19,7 @@ namespace Logbook.Scripts
         {
             if (!logged)
             {
-                LogInDialog login = new();
+                LogInDialog login = new() { Account = this };
                 login.HintBox.Text = hint;
                 login.NameBox.Text = name;
                 login.ShowDialog();
@@ -41,7 +41,6 @@ namespace Logbook.Scripts
                             ProduceButton(log);
                         }
                     }
-
                 }
                 else
                 {
