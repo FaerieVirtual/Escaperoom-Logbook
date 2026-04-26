@@ -1,1 +1,9 @@
-{"logged":false,"name":"Kateřina Havránková","password":"4689","hint":"Vzpomeň si, kde máš napsaný ty čtyři čísla.","auth":1,"profile":"katka.jpeg"}
+{
+  "locked": true,
+  "name": "Kateřina Havránková",
+  "password": "4689",
+  "hint": "Vzpomeň si, kde máš napsaný ty čtyři čísla.",
+  "auth": "User",
+  "profile": "katka.jpeg"
+
+}

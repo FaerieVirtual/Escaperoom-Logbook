@@ -41,7 +41,7 @@ namespace Logbook.Forms
                 hint = hintBox.Text,
                 auth = Authorization.User,
                 profile = pic,
-                logged = false,
+                locked = true,
 
             };
 
@@ -53,9 +53,9 @@ namespace Logbook.Forms
                 Text = account.name,
             };
 
-            button.Click += (sender, e) => Logbook.logbook.LogInAccount(account);
+            button.Click += (sender, e) => account.LogIn();
 
-            Logbook.logbook.accounts.Insert(0, account);
+            AppManager.Accounts.Insert(0, account);
             Logbook.logbook.Account_button.DropDownItems.Add(button);
 
             account.SaveAccount();

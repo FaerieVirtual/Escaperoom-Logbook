@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Logbook.Scripts;
+using System.Windows.Forms;
 
 namespace Logbook.Forms
 {
@@ -57,7 +58,7 @@ namespace Logbook.Forms
             if (AuthorBox.Text == "") { WarningLabel.Text = WarningLabel.Text + "\n Autor nemůže být prázdný!"; return; }
 
             Log log = CreateLog();
-            Logbook.logbook.logs.Add(log);
+            AppManager.Logs.Add(log);
             Close();
         }
 

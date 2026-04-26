@@ -1,6 +1,7 @@
 ﻿using Logbook.Forms;
 using Logbook.Scripts;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -20,10 +21,10 @@ public class Log
 
     public void SaveFromUI()
     {
-        var logbook = Logbook.Logbook.logbook;
+        if (!AppManager.IsAdmin) return;
+        if (AppManager.CurrentLog != this) return;
 
-        if (logbook.selectedLog != this)
-            return;
+        var logbook = Logbook.Logbook.logbook;
 
         Content.Clear();
 
@@ -55,6 +56,8 @@ public class Log
 
     public void WriteToDisk()
     {
+        if (!AppManager.IsAdmin) return;
+
         bool wasLocked = locked;
 
         if (!string.IsNullOrEmpty(password))
@@ -77,7 +80,7 @@ public class Log
         logbook.AuthorBox.Text = "Autor: " + author;
         logbook.DateTimeBox.Text = date + ", " + time;
 
-        Account acc = logbook.accounts.Find(a => a.name == author);
+        Account acc = AppManager.Accounts.Find(a => a.name == author);
 
         if (acc != null && !string.IsNullOrEmpty(acc.profile))
         {
@@ -124,13 +127,13 @@ public class Log
             locked = false;
         }
 
-        if (logbook.selectedLog != null)
+        if (AppManager.CurrentLog != null)
         {
-            logbook.selectedLog.SaveFromUI();
-            logbook.selectedLog.WriteToDisk();
+            AppManager.CurrentLog.SaveFromUI();
+            AppManager.CurrentLog.WriteToDisk();
         }
 
-        logbook.selectedLog = this;
+        AppManager.SetCurrentLog(this);
 
         logbook.SetLogDisplay();
         LoadToUI();

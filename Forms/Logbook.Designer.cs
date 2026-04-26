@@ -109,37 +109,38 @@ namespace Logbook
             Add_button.Name = "Add_button";
             Add_button.Size = new Size(118, 34);
             Add_button.Text = "Přidat";
+            Add_button.ButtonClick += Add_button_ButtonClick;
             // 
             // Add_LogButton
             // 
             Add_LogButton.Name = "Add_LogButton";
-            Add_LogButton.Size = new Size(212, 26);
+            Add_LogButton.Size = new Size(224, 26);
             Add_LogButton.Text = "Protokol";
             Add_LogButton.Click += Add_LogButton_Click;
             // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new Size(209, 6);
+            toolStripSeparator5.Size = new Size(221, 6);
             // 
             // AddTextButton
             // 
             AddTextButton.Name = "AddTextButton";
-            AddTextButton.Size = new Size(212, 26);
+            AddTextButton.Size = new Size(224, 26);
             AddTextButton.Text = "Textové pole";
             AddTextButton.Click += Add_TextClick;
             // 
             // AddImageButton
             // 
             AddImageButton.Name = "AddImageButton";
-            AddImageButton.Size = new Size(212, 26);
+            AddImageButton.Size = new Size(224, 26);
             AddImageButton.Text = "Obrázek";
             AddImageButton.Click += Add_ImageClick;
             // 
             // AddAudioButton
             // 
             AddAudioButton.Name = "AddAudioButton";
-            AddAudioButton.Size = new Size(212, 26);
+            AddAudioButton.Size = new Size(224, 26);
             AddAudioButton.Text = "Nahrávka";
             AddAudioButton.Click += Add_AudioClick;
             // 
@@ -151,7 +152,6 @@ namespace Logbook
             Del_button.Name = "Del_button";
             Del_button.Size = new Size(113, 34);
             Del_button.Text = "Odebrat";
-            Del_button.Click += Del_button_Click;
             // 
             // toolStripLabel1
             // 
@@ -171,7 +171,6 @@ namespace Logbook
             Paste_button.Name = "Paste_button";
             Paste_button.Size = new Size(103, 34);
             Paste_button.Text = "Vložit";
-            Paste_button.Click += Paste_button_Click;
             // 
             // Copy
             // 
@@ -181,7 +180,6 @@ namespace Logbook
             Copy.Name = "Copy";
             Copy.Size = new Size(133, 34);
             Copy.Text = "Kopírovat";
-            Copy.Click += Copy_Click;
             // 
             // Rename
             // 
@@ -336,13 +334,13 @@ namespace Logbook
             // ProfileBox
             // 
             ProfileBox.BackgroundImageLayout = ImageLayout.Zoom;
-            ProfileBox.SizeMode = PictureBoxSizeMode.StretchImage;
             ProfileBox.BorderStyle = BorderStyle.FixedSingle;
             ProfileBox.Image = (Image)resources.GetObject("ProfileBox.Image");
             ProfileBox.Location = new Point(35, 60);
             ProfileBox.Margin = new Padding(6);
             ProfileBox.Name = "ProfileBox";
             ProfileBox.Size = new Size(180, 163);
+            ProfileBox.SizeMode = PictureBoxSizeMode.StretchImage;
             ProfileBox.TabIndex = 4;
             ProfileBox.TabStop = false;
             ProfileBox.Tag = "LogDisplay";

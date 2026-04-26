@@ -65,7 +65,6 @@ namespace Logbook.Forms
             pictureBox1.TabIndex = 5;
             pictureBox1.TabStop = false;
             pictureBox1.Tag = "LogDisplay";
-            pictureBox1.Visible = false;
             // 
             // label1
             // 

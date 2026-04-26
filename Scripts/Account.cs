@@ -1,6 +1,8 @@
 ﻿using Logbook.Forms;
-using Microsoft.VisualBasic.Logging;
+using Logbook.Properties;
 using Newtonsoft.Json;
+using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -8,72 +10,29 @@ namespace Logbook.Scripts
 {
     public class Account
     {
-        public bool logged;
+        public bool locked;
         public string name;
         public string password;
         public string hint;
         public Authorization auth;
         public string profile;
 
-        public LogInSuccess LogIn()
+        public void LogIn()
         {
-            if (!logged)
+            if (locked)
             {
-                LogInDialog login = new() { Account = this };
-                login.HintBox.Text = hint;
-                login.NameBox.Text = name;
-                login.ShowDialog();
+                var dialog = new LogInDialog(this);
 
-                if (login.NameBox.Text != name) return LogInSuccess.Failure;
-                if (login.passwordBox.Text != password) return LogInSuccess.IncorrectPassword;
-            }
-            else
-            {
-                PrivatizeAll();
-                if (auth == Authorization.Admin)
-                {
-                    foreach (Log log in Logbook.logbook.logs)
-                    {
-                        if (log.privated)
-                        {
-                            FlowLayoutPanel LogPanel = Logbook.logbook.LogPanel;
+                if (dialog.ShowDialog() != DialogResult.OK)
+                    return;
 
-                            ProduceButton(log);
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (Log log in Logbook.logbook.logs)
-                    {
-                        if (log.privated && log.author == name)
-                        {
-                            FlowLayoutPanel LogPanel = Logbook.logbook.LogPanel;
-
-                            ProduceButton(log);
-                        }
-                    }
-                }
-                logged = true;
-                return LogInSuccess.Success;
+                locked = false;
             }
 
-            return LogInSuccess.Success;
+            AppManager.SetCurrentUser(this);
+
+            AppManager.SwitchUser(this);
         }
-
-        public void LogOut()
-        {
-            foreach (Log log in Logbook.logbook.logs)
-            {
-                if (log.author == name || log.privated)
-                {
-                    Button btn = log.CreateLogButton();
-                    Logbook.logbook.LogPanel.Controls.Remove(btn);
-                }
-            }
-            logged = false;
-        }
-
         public void SaveAccount()
         {
             string JSON = JsonConvert.SerializeObject(this);
@@ -82,50 +41,6 @@ namespace Logbook.Scripts
 
             File.WriteAllText(file, JSON);
         }
-
-        private void PrivatizeAll()
-        {
-            foreach (Log log in Logbook.logbook.logs)
-            {
-                if (log.privated)
-                {
-                    foreach (Control ctrl in Logbook.logbook.LogPanel.Controls)
-                    {
-                        if (ctrl.Name == log.title)
-                        {
-                            ctrl.Visible = false;
-                            ctrl.Enabled = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void ProduceButton(Log log)
-        {
-            bool found = false;
-
-            foreach (Control ctrl in Logbook.logbook.LogPanel.Controls)
-            {
-                if (ctrl.Name == log.title)
-                {
-                    ctrl.Visible = true;
-                    ctrl.Enabled = true;
-                    found = true;
-                }
-            }
-            if (!found)
-            {
-                Logbook.logbook.LogPanel.Controls.Add(log.CreateLogButton());
-            }
-        }
-    }
-
-    public enum LogInSuccess
-    {
-        Success,
-        IncorrectPassword,
-        Failure
     }
 
     public enum Authorization

@@ -23,11 +23,6 @@ namespace Logbook
 
         public static Logbook logbook;
 
-        public Account currentAccount;
-        public List<Account> accounts = new();
-        public Log selectedLog;
-        public List<Log> logs = new();
-
         public WaveOutEvent output;
         public AudioFileReader audioFile;
 
@@ -48,30 +43,32 @@ namespace Logbook
             InitializeContentPanelMenu();
             InitializeLogItemMenu();
             InitializeLogPanelMenu();
-            LoadAllLogs();
-            LoadAllAccounts();
+            CreateAccountButtons();
 
             SetHomeDisplay();
-
-            Log log = logs.Find(l => l.title == "Vítejte!");
-            Button btn = log.CreateLogButton();
-            btn.Enabled = true;
-            btn.Visible = true;
-            LogPanel.Controls.Add(btn);
-        }
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            var log = selectedLog;
-            if (log != null)
-            {
-                log.SaveFromUI();
-                log.WriteToDisk();
-            }
-
-            base.OnFormClosing(e);
+            Log welcome = AppManager.Logs.Find(log => log.title == "Vítejte!");
+            LogPanel.Controls.Add(welcome.CreateLogButton());
         }
 
         #region Log Management
+
+        public void CreateAccountButtons()
+        {
+            foreach (Account acc in AppManager.Accounts)
+            {
+                ToolStripMenuItem button = new()
+                {
+                    Image = Resources.pass,
+                    Name = acc.name + "Button",
+                    Size = new Size(332, 26),
+                    Text = acc.name,
+                };
+
+                button.Click += (sender, e) => acc.LogIn();
+
+                Account_button.DropDownItems.Insert(0, button);
+            }
+        }
 
         public void AddLog()
         {
@@ -110,36 +107,11 @@ namespace Logbook
             }
         }
 
-
-        private void LoadAllLogs()
-        {
-            foreach (var file in Directory.GetFiles(Paths.Logs, "*.json"))
-            {
-                string json = File.ReadAllText(file);
-                Log log = JsonConvert.DeserializeObject<Log>(json);
-
-                logs.Add(log);
-
-                Button btn = log.CreateLogButton();
-
-                if (!log.privated)
-                {
-                    LogPanel.Controls.Add(btn);
-                }
-                else
-                {
-                    btn.Visible = false;
-                    btn.Enabled = false;
-                    LogPanel.Controls.Add(btn);
-                }
-            }
-        }
-
         public void ResizeOnClientSizeChanged(object sender, EventArgs e)
         {
-            if (selectedLog != null)
+            if (AppManager.CurrentLog != null)
             {
-                selectedLog.Open();
+                AppManager.CurrentLog.Open();
             }
             MainPanel.RowStyles.Clear();
             MainPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, ToolStrip.Height));
@@ -149,46 +121,20 @@ namespace Logbook
         #endregion
 
         #region Account Management
-        private void LoadAllAccounts()
-        {
-            foreach (var file in Directory.GetFiles(Paths.Accounts, "*.json"))
-            {
-                string json = File.ReadAllText(file);
-                Account acc = JsonConvert.DeserializeObject<Account>(json);
-                ToolStripMenuItem button = new()
-                {
-                    Image = Resources.pass,
-                    Name = acc.name + "Button",
-                    Size = new Size(332, 26),
-                    Text = acc.name,
-                };
-
-                button.Click += (sender, e) => LogInAccount(acc);
-
-                Account_button.DropDownItems.Insert(0, button);
-
-                accounts.Add(acc);
-            }
-        }
 
         private void AddAccount()
         {
+            if (!AppManager.IsAdmin)
+            {
+                MessageBox.Show("Nemáte Admin přístup. Pokud chcete upravovat program, přihlaste se do Admin účtu. (Jen pro správce hry.)", "Úprava selhala", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+
             AddAccountDialog dialog = new();
             dialog.Show();
         }
 
-        public void LogInAccount(Account account)
-        {
-            LogInSuccess success = account.LogIn();
-
-            if (success == LogInSuccess.Success)
-            {
-                Account_button.Text = account.name;
-                currentAccount = account;
-                MessageBox.Show($"Přihlášený účet: {account.name} \nAutorizace: {currentAccount.auth} \n\nNačítám protokoly uživatele...", "Přihlášení úspěšné!");
-                Refresh();
-            }
-        }
         #endregion
 
         #region Content Item Menu
@@ -217,17 +163,19 @@ namespace Logbook
         private void ContentPanel_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right) return;
-            if (currentAccount.auth != Authorization.Admin) return;
 
             Control clicked = ContentPanel.GetChildAtPoint(e.Location);
+            if (AppManager.IsAdmin)
+            {
 
-            if (clicked == null)
-            {
-                contentPanelMenu.Show(ContentPanel, e.Location);
-            }
-            else
-            {
-                contentItemMenu.Show(clicked, e.Location);
+                if (clicked == null)
+                {
+                    contentPanelMenu.Show(ContentPanel, e.Location);
+                }
+                else
+                {
+                    contentItemMenu.Show(clicked, e.Location);
+                }
             }
         }
 
@@ -288,7 +236,7 @@ namespace Logbook
         {
             if (logItemMenu.SourceControl?.Tag is Log log)
             {
-                logs.Remove(log);
+                AppManager.Logs.Remove(log);
                 File.Delete(Path.Combine(Paths.Logs, log.title + ".json"));
                 LogPanel.Controls.Remove(logItemMenu.SourceControl);
             }
@@ -298,12 +246,13 @@ namespace Logbook
         {
             if (logItemMenu.SourceControl?.Tag is Log log)
             {
+                string title = log.title.Substring(4);
                 string newName = Microsoft.VisualBasic.Interaction.InputBox(
-                    "Nový název protokolu:", "Přejmenovat", log.title);
+                    "Nový název protokolu:", "Přejmenovat", title);
 
                 if (string.IsNullOrWhiteSpace(newName)) return;
 
-                File.Delete(Path.Combine(Paths.Logs, log.title + ".json"));
+                File.Delete(Path.Combine(Paths.Logs, title + ".json"));
                 log.title = log.locked ? $"[🔒] {newName}" : $"[🔓] {newName}";
                 log.WriteToDisk();
 
@@ -324,26 +273,29 @@ namespace Logbook
             Log clone = JsonConvert.DeserializeObject<Log>(
                 JsonConvert.SerializeObject(clipboardLog));
 
+            AppManager.Logs.Add(clone);
+
             clone.title += " kopie";
             clone.WriteToDisk();
 
-            logs.Add(clone);
             LogPanel.Controls.Add(clone.CreateLogButton());
         }
         private void LogPanel_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right) return;
-            if (currentAccount.auth != Authorization.Admin) return;
 
             Control clicked = LogPanel.GetChildAtPoint(e.Location);
 
-            if (clicked == null)
+            if (AppManager.IsAdmin)
             {
-                logPanelMenu.Show(LogPanel, e.Location);
-            }
-            else
-            {
-                logItemMenu.Show(clicked, e.Location);
+                if (clicked == null)
+                {
+                    logPanelMenu.Show(LogPanel, e.Location);
+                }
+                else
+                {
+                    logItemMenu.Show(clicked, e.Location);
+                }
             }
         }
 
@@ -390,6 +342,14 @@ namespace Logbook
                 ForeColor = Color.Black,
                 ContextMenuStrip = contentItemMenu
             };
+            textBox.Click += (s, e) =>
+            {
+                if (!AppManager.IsAdmin)
+                {
+                    textBox.ReadOnly = true;
+                }
+                else { textBox.ReadOnly = false; }
+            };
 
             textBox.TextChanged += (s, e) =>
             {
@@ -434,73 +394,75 @@ namespace Logbook
         {
             SetHomeDisplay();
         }
+        private void Add_button_ButtonClick(object sender, EventArgs e)
+        {
+            Add_button.DropDown.Show();
+        }
         private void Add_TextClick(object sender, EventArgs e)
         {
-            if (currentAccount != null && currentAccount.auth == Authorization.Admin)
+            if (!AppManager.IsAdmin)
             {
-                AddTextfield();
+                MessageBox.Show("Nemáte Admin přístup. Pokud chcete upravovat program, přihlaste se do Admin účtu. (Jen pro správce hry.)", "Úprava selhala", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
-            else
-            {
-                MessageBox.Show("Nemáte dostatečná práva k přidání textového pole. Pokud chcete přidávat a upravovat protokoly, přihlaste se k účtu admina.", "Úprava v režimu čtení", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+
+            AddTextfield();
         }
         private void Add_AudioClick(object sender, EventArgs e)
         {
-            if (currentAccount != null && currentAccount.auth == Authorization.Admin)
+            if (!AppManager.IsAdmin)
             {
-                using OpenFileDialog ofd = new();
-                ofd.AddExtension = true;
-                ofd.Filter = "All files (*.*)|*.*|MP3 files (*.mp3)|*.mp3|WAV files (*.wav)|*.wav|AIFF files (*.aiff)|*.aiff";
-                ofd.Title = "Choose a file:";
-
-                DialogResult result = ofd.ShowDialog();
-
-                if (result == DialogResult.Cancel) return;
-
-                AudioFileReader reader;
-
-                string fileName = ofd.FileName;
-                string destinationPath = Path.Combine(Paths.Audio, Path.GetFileName(fileName));
-                
-                reader = new(ofd.FileName);
-                File.Copy(fileName, destinationPath, true);
-                
-                AddAudioRecording(fileName);
-            }
-            else
-            {
-                MessageBox.Show("Nemáte dostatečná práva k přidání audio nahrávky. Pokud chcete přidávat a upravovat protokoly, přihlaste se k účtu admina.", "Úprava v režimu čtení", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nemáte Admin přístup. Pokud chcete upravovat program, přihlaste se do Admin účtu. (Jen pro správce hry.)", "Úprava selhala", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
 
+
+            using OpenFileDialog ofd = new();
+            ofd.AddExtension = true;
+            ofd.Filter = "All files (*.*)|*.*|MP3 files (*.mp3)|*.mp3|WAV files (*.wav)|*.wav|AIFF files (*.aiff)|*.aiff";
+            ofd.Title = "Choose a file:";
+
+            DialogResult result = ofd.ShowDialog();
+
+            if (result == DialogResult.Cancel) return;
+
+            AudioFileReader reader;
+
+            string fileName = ofd.FileName;
+            string destinationPath = Path.Combine(Paths.Audio, Path.GetFileName(fileName));
+
+            reader = new(ofd.FileName);
+            File.Copy(fileName, destinationPath, true);
+
+            AddAudioRecording(fileName);
         }
 
 
         private void Add_ImageClick(object sender, EventArgs e)
         {
-            if (currentAccount != null && currentAccount.auth == Authorization.Admin)
+            if (!AppManager.IsAdmin)
             {
-                using OpenFileDialog ofd = new();
-
-                ofd.AddExtension = true;
-                ofd.Filter = "All files (*.*)|*.*|PNG soubory (*.png)|*.png|JPEG soubory (*.jpeg)|*.jpeg|JPG soubory (*.jpg)|*.jpg";
-                ofd.Title = "Vyberte soubor:";
-
-                DialogResult success = ofd.ShowDialog();
-
-                if (success == DialogResult.Cancel) return;
-
-                string fileName = ofd.FileName;
-                string destinationPath = Path.Combine(Paths.Images, Path.GetFileName(fileName));
-
-                File.Copy(fileName, destinationPath, true);
-
-                AddImage(fileName);
+                MessageBox.Show("Nemáte Admin přístup. Pokud chcete upravovat program, přihlaste se do Admin účtu. (Jen pro správce hry.)", "Úprava selhala", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
-            else
-            {
-                MessageBox.Show("Nemáte dostatečná práva k přidání obrázku. Pokud chcete přidávat a upravovat protokoly, přihlaste se k účtu admina.", "Úprava v režimu čtení", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+
+
+            using OpenFileDialog ofd = new();
+
+            ofd.AddExtension = true;
+            ofd.Filter = "All files (*.*)|*.*|PNG soubory (*.png)|*.png|JPEG soubory (*.jpeg)|*.jpeg|JPG soubory (*.jpg)|*.jpg";
+            ofd.Title = "Vyberte soubor:";
+
+            DialogResult success = ofd.ShowDialog();
+
+            if (success == DialogResult.Cancel) return;
+
+            string fileName = ofd.FileName;
+            string destinationPath = Path.Combine(Paths.Images, Path.GetFileName(fileName));
+
+            File.Copy(fileName, destinationPath, true);
+
+            AddImage(fileName);
         }
         private void Del_button_Click(object sender, EventArgs e)
         {
@@ -515,42 +477,45 @@ namespace Logbook
         }
         private void Rename_Click(object sender, EventArgs e)
         {
-            if (currentAccount != null && currentAccount.auth == Authorization.Admin)
+            if (!AppManager.IsAdmin)
             {
-                string newName = Microsoft.VisualBasic.Interaction.InputBox(
-                    "Nový název protokolu:", "Přejmenovat", selectedLog.title);
-
-                if (string.IsNullOrWhiteSpace(newName)) return;
-
-                File.Delete(Path.Combine(Paths.Logs, selectedLog.title + ".json"));
-                selectedLog.title = selectedLog.locked ? $"[🔒] {newName}" : $"[🔓] {newName}";
-                selectedLog.WriteToDisk();
-
-                logItemMenu.SourceControl.Text = newName;
+                MessageBox.Show("Nemáte Admin přístup. Pokud chcete upravovat program, přihlaste se do Admin účtu. (Jen pro správce hry.)", "Úprava selhala", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
-            else
-            {
-                MessageBox.Show("Nelze upravit protokol v režimu čtení. Pokud chcete přidávat a upravovat protokoly, přihlaste se a zapněte režim úprav.", "Úprava v režimu čtení", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            Log log = AppManager.CurrentLog;
+            string title = log.title.Substring(4);
+            string newName = Microsoft.VisualBasic.Interaction.InputBox(
+                "Nový název protokolu:", "Přejmenovat", title);
 
+            if (string.IsNullOrWhiteSpace(newName)) return;
+
+            File.Delete(Path.Combine(Paths.Logs, title + ".json"));
+            log.title = log.locked ? $"[🔒] {newName}" : $"[🔓] {newName}";
+            log.WriteToDisk();
+
+            logItemMenu.SourceControl.Text = newName;
         }
 
         private void AddAccButton_Click(object sender, EventArgs e)
         {
+            if (!AppManager.IsAdmin)
+            {
+                MessageBox.Show("Nemáte Admin přístup. Pokud chcete upravovat program, přihlaste se do Admin účtu. (Jen pro správce hry.)", "Úprava selhala", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             AddAccount();
         }
 
 
         private void Add_LogButton_Click(object sender, EventArgs e)
         {
-            if (currentAccount != null && currentAccount.auth == Authorization.Admin)
+            if (!AppManager.IsAdmin)
             {
-                AddLog();
+                MessageBox.Show("Nemáte Admin přístup. Pokud chcete upravovat program, přihlaste se do Admin účtu. (Jen pro správce hry.)", "Úprava selhala", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
-            else
-            {
-                MessageBox.Show("Nemáte dostatečná práva k přidání protokolu. Pokud chcete přidávat a upravovat protokoly, přihlaste se k účtu admina.", "Úprava v režimu čtení", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            AddLog();
         }
 
         #endregion
@@ -574,7 +539,6 @@ namespace Logbook
             DateLabel.Text = displayDate;
             TimeLabel.Text = DateTime.Now.TimeOfDay.Hours.ToString("00") + ":" + DateTime.Now.TimeOfDay.Minutes.ToString("00") + ":" + Math.Round((double)DateTime.Now.TimeOfDay.Seconds).ToString("00");
         }
-
     }
 }
 

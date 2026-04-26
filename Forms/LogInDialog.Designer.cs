@@ -275,6 +275,6 @@ namespace Logbook.Forms
         private Button HiddenButton;
         public Label HintBox;
         public TextBox passwordBox;
-        private Label WarningLabel;
+        public Label WarningLabel;
     }
 }
