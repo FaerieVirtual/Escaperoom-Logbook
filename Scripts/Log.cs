@@ -148,8 +148,8 @@ public class Log
             Width = Logbook.Logbook.logbook.LogPanel.ClientSize.Width - 20,
             Font = new Font("Courier New", 18),
             Name = title,
-            ContextMenuStrip = Logbook.Logbook.logbook.logItemMenu,
-            Tag = this
+            Tag = this,
+            ContextMenuStrip = Logbook.Logbook.logbook.logItemMenu
         };
 
         btn.Click += (s, e) => Open();

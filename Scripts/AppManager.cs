@@ -1,5 +1,6 @@
 ﻿using Logbook.Properties;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -17,7 +18,10 @@ namespace Logbook.Scripts
         public static Log CurrentLog = null;
         public static List<Log> Logs = [];
 
-        public static int Ticks;
+        private static int Ticks = 0;
+        private static int PromptThreshold = 5340;
+        private static int RestartThreshold = 5400;
+        private static bool Restarting = false;
 
         public static void Initialize()
         {
@@ -65,26 +69,6 @@ namespace Logbook.Scripts
             logbook.ProfileBox.Image = Resources.pass;
         }
 
-        public static void ResetApp()
-        {
-            ClearScreen();
-            Logbook.logbook.SetHomeDisplay();
-            Logbook.logbook.Account_button.Text = "Přihlásit se";
-            CurrentLog = null;
-            CurrentUser = null;
-
-            foreach(Log log in Logs)
-            {
-                log.locked = true;
-            }
-            foreach(Account account in Accounts)
-            {
-                account.locked = true;
-            }
-            ReloadLogs();
-            Logbook.logbook.LogPanel.Controls.Add(Logs.Find(log => log.title == "Vítejte!").CreateLogButton());
-        }
-
         public static void LoadAllLogs()
         {
             foreach (var file in Directory.GetFiles(Paths.Logs, "*.json"))
@@ -99,9 +83,12 @@ namespace Logbook.Scripts
         {
             foreach (Log log in Logs)
             {
-                if ((log.author == CurrentUser.name && log.title != "Vítejte!") || CurrentUser.auth == Authorization.Admin)
+                if (CurrentUser != null)
                 {
-                    Logbook.logbook.LogPanel.Controls.Add(log.CreateLogButton());
+                    if ((log.author == CurrentUser.name && log.title != "Vítejte!") || CurrentUser.auth == Authorization.Admin)
+                    {
+                        Logbook.logbook.LogPanel.Controls.Add(log.CreateLogButton());
+                    }
                 }
             }
         }
@@ -125,13 +112,25 @@ namespace Logbook.Scripts
                 button.Click += (sender, e) => acc.LogIn();
             }
         }
-        public static void Tick() 
+        public static void Tick()
         {
-            Ticks += 1;
+            Ticks++;
 
-            if (Ticks >= 5400)
+            if (Restarting) return;
+            if (Ticks == PromptThreshold)
             {
-                ResetApp();
+                string response = Microsoft.VisualBasic.Interaction.InputBox("Čas únikovky vypršel. Pokud nechcete, aby se aplikace restartovala, zadejte heslo k Admin účtu:", "Čas vypršel");
+                if (response == "ZachranteKralovnu25")
+                {
+                    Ticks = 0;
+                }
+            }
+
+            if (Ticks >= RestartThreshold)
+            {
+                Restarting = true;
+                Application.Restart();
+                Environment.Exit(0);
             }
         }
     }

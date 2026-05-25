@@ -1,11 +1,10 @@
 ﻿using Logbook.Forms;
 using Logbook.Properties;
 using Logbook.Scripts;
-using Microsoft.VisualBasic.Logging;
 using NAudio.Wave;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -142,22 +141,28 @@ namespace Logbook
         {
             contentItemMenu = new ContextMenuStrip();
 
-            contentItemMenu.Items.Add("Kopírovat", null, Content_Copy_Click);
-            contentItemMenu.Items.Add("Vložit", null, Content_Paste_Click);
-            contentItemMenu.Items.Add("Odstranit", null, Content_Delete_Click);
+            contentItemMenu.Items.Add("Kopírovat", Resources.copy, Content_Copy_Click);
+            contentItemMenu.Items.Add("Vložit", Resources.paste, Content_Paste_Click);
+            contentItemMenu.Items.Add("Odstranit", Resources.delete, Content_Delete_Click);
 
             contentItemMenu.Items.Add(new ToolStripSeparator());
 
-            contentItemMenu.Items.Add("Zrušit výběr", null, (sender, e) => ActiveControl = null);
+            contentItemMenu.Items.Add("Zrušit výběr", Resources.edit, (sender, e) => ActiveControl = null);
             ContentPanel.MouseUp += ContentPanel_MouseUp;
+            contentItemMenu.Opening += Menu_OnOpening;
         }
 
         private void InitializeContentPanelMenu()
         {
             contentPanelMenu = new ContextMenuStrip();
 
-            contentPanelMenu.Items.Add("Vložit", null, Log_Paste_Click);
+            contentPanelMenu.Items.Add("Vložit", Resources.paste, Log_Paste_Click);
             ContentPanel.MouseUp += ContentPanel_MouseUp;
+            contentPanelMenu.Opening += Menu_OnOpening;
+        }
+        private void Menu_OnOpening(object sender, CancelEventArgs e)
+        {
+            e.Cancel = !AppManager.IsAdmin;
         }
 
         private void ContentPanel_MouseUp(object sender, MouseEventArgs e)
@@ -221,10 +226,11 @@ namespace Logbook
         {
             logItemMenu = new ContextMenuStrip();
 
-            logItemMenu.Items.Add("Přejmenovat", null, Log_Rename_Click);
-            logItemMenu.Items.Add("Kopírovat", null, Log_Copy_Click);
-            logItemMenu.Items.Add("Odstranit", null, Log_Delete_Click);
+            logItemMenu.Items.Add("Přejmenovat", Resources.edit, Log_Rename_Click);
+            logItemMenu.Items.Add("Kopírovat", Resources.copy, Log_Copy_Click);
+            logItemMenu.Items.Add("Odstranit", Resources.delete, Log_Delete_Click);
             LogPanel.MouseUp += LogPanel_MouseUp;
+            logItemMenu.Opening += Menu_OnOpening;
         }
         private void Log_Copy_Click(object sender, EventArgs e)
         {
@@ -263,8 +269,9 @@ namespace Logbook
         private void InitializeLogPanelMenu()
         {
             logPanelMenu = new ContextMenuStrip();
-            logPanelMenu.Items.Add("Vložit", null, Log_Paste_Click);
+            logPanelMenu.Items.Add("Vložit", Resources.paste, Log_Paste_Click);
             LogPanel.MouseUp += LogPanel_MouseUp;
+            logPanelMenu.Opening += Menu_OnOpening;
         }
         private void Log_Paste_Click(object sender, EventArgs e)
         {
@@ -376,8 +383,8 @@ namespace Logbook
                 {
                     Name = Path.GetFileName(fileName),
                     Tag = "LogDisplay",
-                    ContextMenuStrip = contentItemMenu,
-                    Margin = new Padding(50, 10, 20, 10)
+                    Margin = new Padding(50, 10, 20, 10),
+                    ContextMenuStrip = contentItemMenu
                 };
                 ContentPanel.Controls.Add(strip);
             }
@@ -526,18 +533,20 @@ namespace Logbook
             switch (DateTime.Now.DayOfWeek.ToString())
             {
                 case "Monday": displayDate = "Pondělí "; break;
-                case "Tuesday": displayDate = "Úterý "; break;
-                case "Wednesday": displayDate = "Středa "; break;
+                case "Tuesday": displayDate = "  Úterý "; break;
+                case "Wednesday": displayDate = " Středa "; break;
                 case "Thursday": displayDate = "Čtvrtek "; break;
-                case "Friday": displayDate = "Pátek "; break;
-                case "Saturday": displayDate = "Sobota "; break;
-                case "Sunday": displayDate = "Neděle "; break;
+                case "Friday": displayDate = "  Pátek "; break;
+                case "Saturday": displayDate = " Sobota "; break;
+                case "Sunday": displayDate = " Neděle "; break;
             }
 
             displayDate += DateTime.Now.Date.Day.ToString() + "." + DateTime.Now.Date.Month.ToString() + "." + DateTime.Now.Date.Year.ToString();
 
             DateLabel.Text = displayDate;
             TimeLabel.Text = DateTime.Now.TimeOfDay.Hours.ToString("00") + ":" + DateTime.Now.TimeOfDay.Minutes.ToString("00") + ":" + Math.Round((double)DateTime.Now.TimeOfDay.Seconds).ToString("00");
+
+            AppManager.Tick();
         }
     }
 }
