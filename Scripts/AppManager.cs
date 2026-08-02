@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -128,6 +129,20 @@ namespace Logbook.Scripts
 
             if (Ticks >= RestartThreshold)
             {
+                foreach (Account account in Accounts)
+                { 
+                    account.locked = true;
+                    account.SaveAccount();
+                }
+
+                foreach (Log log in Logs)
+                {
+                    if (log.password != "")
+                    {
+                        log.locked = true;
+                    }
+                }
+
                 Restarting = true;
                 Application.Restart();
                 Environment.Exit(0);
