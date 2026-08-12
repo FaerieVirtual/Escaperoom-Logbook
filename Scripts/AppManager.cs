@@ -127,7 +127,7 @@ namespace Logbook.Scripts
                 }
             }
 
-            if (Ticks >= RestartThreshold)
+            if (Ticks >= RestartThreshold && !Restarting)
             {
                 foreach (Account account in Accounts)
                 { 
@@ -137,13 +137,21 @@ namespace Logbook.Scripts
 
                 foreach (Log log in Logs)
                 {
-                    if (log.password != "")
+                    if (!string.IsNullOrEmpty(log.password))
                     {
                         log.locked = true;
+
+                        string json = JsonConvert.SerializeObject(log, Formatting.Indented);
+                        string file = Path.Combine(Paths.Logs, log.title + ".json");
+
+                        File.WriteAllText(file, json);
                     }
                 }
 
                 Restarting = true;
+
+                System.Diagnostics.Process.Start("shutdown.exe", "-r -t 2");
+
                 Application.Restart();
                 Environment.Exit(0);
             }
